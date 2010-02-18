@@ -1,0 +1,8 @@
+com.manheim.vim
+com.manheim.vim.imageexporter
+com.manheim.vim.imageloader
+com.manheim.vim.services.exception
+com.manheim.vim.services.util
+com.manheim.vim.services.vehicleimage
+com.manheim.vim.services.vehicleimage.impl
+com.manheim.vim.services.vehicleimage.model

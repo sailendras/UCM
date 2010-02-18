@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.manheim.com/vim/schemas/config/export"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:exportconfig="http://www.manheim.com/vim/schemas/config/export"
+           xmlns:metadata="http://www.manheim.com/vim/schemas/config/metadata"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.manheim.com/vim/schemas/config/metadata" schemaLocation="metadata.xsd" />
+
+  <xs:element name="export-config" nillable="false">
+    <xs:complexType>
+      <xs:sequence>        
+        <xs:element name="metadata-queries" type="exportconfig:metadata-query" nillable="true" minOccurs="1" maxOccurs="unbounded"></xs:element>
+        <xs:element name="path" type="xs:string" nillable="false" maxOccurs="1"/>        	
+		<xs:element name="providerName" type="xs:string" nillable="false" maxOccurs="1"/>
+		<xs:element name="groupId" type="xs:string" nillable="false" maxOccurs="1"/>
+		<xs:element name="logRequired" type="xs:boolean" nillable="false" maxOccurs="1"/>
+		<xs:element name="manifest-metadata-field" type="xs:string" nillable="false" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+
+  <xs:complexType name="metadata-query">
+    <xs:sequence>
+      <xs:element name="metadata" type="metadata:metadata" nillable="false" minOccurs="1" maxOccurs="unbounded"></xs:element>
+    </xs:sequence>
+  </xs:complexType>   
+
+</xs:schema>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+              
+<project basedir="." default="generate-xmlbeans" name="schemas">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="${eclipse.home}"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.5"/>
+    <property name="source" value="1.5"/>
+	
+    <path id="XMLBeans.userclasspath">
+      <pathelement location="../../../lib/XMLBeans/xbean.jar"/>
+      <pathelement location="../../../lib/XMLBeans/jsr173_1.0_api.jar"/>
+      <pathelement location="bin"/>
+    </path>
+	
+    <path id="schemas.classpath">
+        <pathelement location="bin"/>
+        <path refid="XMLBeans.userclasspath"/>
+    </path>
+
+    <taskdef name="xmlbean" classname="org.apache.xmlbeans.impl.tool.XMLBean" classpathref="schemas.classpath" />
+    
+    <target name="init">
+    	<echo>java home = ${java.home}</echo>
+        <echo>ECLIPSE_HOME = ${ECLIPSE_HOME}</echo>
+    	
+        <mkdir dir="src"/>
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src" excludes="**/*.launch, **/*svn*, **/*.java"/>
+        </copy>
+    </target>
+	
+    <target name="clean">
+        <delete dir="src/com" />
+        <delete dir="bin" />
+    </target>
+	
+    <target depends="clean" name="cleanall" />
+
+<!--
+    <target depends="generate-xmlbeans,build-subprojects,build-project" name="build"/>
+-->
+	
+    <target depends="clean,init" name="generate-xmlbeans">
+        <xmlbean schema="schemas"
+        	       srcgendir="src"
+        	       classgendir="bin"
+                 javasource="1.5"
+                 classpathref="schemas.classpath" />
+    </target>
+    
+<!--
+    <target name="build-subprojects"/>
+
+	
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="schemas.classpath"/>
+        </javac>
+    </target>
+    
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+-->
+</project>

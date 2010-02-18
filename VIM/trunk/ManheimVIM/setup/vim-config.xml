@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vim-import-config
+      xmlns="http://www.manheim.com/vim/schemas/config"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.manheim.com/vim/schemas/config config.xsd ">
+  <id>0</id>
+  <maxExecutionTime>300000</maxExecutionTime>
+  <numberThreads>10</numberThreads>
+</vim-import-config>
