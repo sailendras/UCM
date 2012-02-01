@@ -1,0 +1,66 @@
+﻿<?hda version="7.5-dev" jcharset=UTF8 encoding=utf-8?>
+@Properties LocalData
+serverVersion=7.1.2.166
+version=2005_01_24
+classpath=$COMPONENT_DIR/classes
+blFieldTypes=
+libpath=$COMPONENT_DIR/lib
+ComponentName=NewIdocScript
+hasPreferenceData=false
+blDateFormat=M/d{/yy}{ h:mm[:ss]{ a}}!mAM,PM!tAmerica/Chicago
+@end
+@ResultSet ResourceDefinition
+4
+type
+filename
+tables
+loadOrder
+resource
+new_idoc_script_extensions.htm
+DataAccessExtensions
+1
+template
+new_idoc_script_templates.hda
+null
+1
+resource
+new_idoc_script_resources.htm
+null
+1
+@end
+@ResultSet MergeRules
+4
+fromTable
+toTable
+column
+loadOrder
+NewIdocScriptExtensions
+IdocScriptExtensions
+name
+1
+NewIdocScriptTemplates
+IntradocTemplates
+name
+1
+@end
+@ResultSet Filters
+4
+type
+location
+parameter
+loadOrder
+@end
+@ResultSet ClassAliases
+2
+classname
+location
+@end
+
+###
+# This is here so the Component Installer knows what to name
+#   the component during an install of a manifest
+# This result set is standard for a component.  Custom templates
+#   and script extensions are loaded up. 
+# This result set is required to merge customized table data into the
+#   default tables.  In this case, we have custom IdocScript extensions, 
+#   and custom templates that must be merged.

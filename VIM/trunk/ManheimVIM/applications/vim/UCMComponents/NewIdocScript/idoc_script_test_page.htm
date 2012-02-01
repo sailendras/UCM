@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+	<$defaultPageTitle="IdocScript Test Page"$>
+	<$include std_html_head_declarations$>
+</head>
+
+<$include body_def$>
+
+<$include std_page_begin$>
+
+<$include std_header$>
+
+<!--Directory Title--->
+<table border="0" cellpadding="0" cellspacing="0" width="<$StdPageWidth-35$>">
+<tr>
+	<td colspan="2" width="390"><h4 class=pageTitle>IdocScript Test Page</h4></td>
+</tr>
+</table>
+
+<p><span class=tableEntry>This page demonstrates that custom IdocScript can
+be executed in the same way as normal IdocScript.  The Java Class
+<span class=highlightField>"NewScriptExtensions.java"</span> and the file
+<span class=highlightField>"new_idoc_script_extensions.htm"</span>
+demonstrate how to modify or add functionality to IdocScript with a component.
+Note that the 'log' function dumps output to the console, so you will
+need to 'View Server Output' from the Admin Server to see it.</span></p>
+
+<br><br>
+
+<!-- demonstration of the custom IdocScript tags -->
+<table border=1>
+<tr>
+	<td><span class=tableEntry><strong>IdocScript</strong></span></td>
+	<td><span class=tableEntry><strong>Value</strong></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$UppercaseUserName$&gt;</span></td>
+	<td><span class=tableEntry><$UppercaseUserName$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$DayOfWeek$&gt;</span></td>
+	<td><span class=tableEntry><$DayOfWeek$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$TodaysDateIsEven$&gt;</span></td>
+	<td><span class=tableEntry><$TodaysDateIsEven$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$HasAdminRole$&gt;</span></td>
+	<td><span class=tableEntry><$HasAdminRole$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$uuShaHash("test")$&gt;</span></td>
+	<td><span class=tableEntry><$uuShaHash("test")$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$uuShaHash("Test")$&gt;</span></td>
+	<td><span class=tableEntry><$uuShaHash("Test")$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$factorial(4)$&gt;</span></td>
+	<td><span class=tableEntry><$factorial(4)$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$factorial(0)$&gt;</span></td>
+	<td><span class=tableEntry><$factorial(0)$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$factorial(-4)$&gt;</span></td>
+	<td><span class=tableEntry><$factorial(-4)$></span></td>
+</tr>
+
+<tr>
+	<td><span class=tableEntry>&lt;$log("pageTitle = &lt;$pageTitle$&gt;")$&gt;</span></td>
+	<td><span class=tableEntry><$log("pageTitle = <$pageTitle$>")$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$log("#LocalData")$&gt;</span></td>
+	<td><span class=tableEntry><$log("#LocalData")$></span></td>
+</tr>
+
+<tr>
+	<td><span class=tableEntry>&lt;$strMin("beta", "alpha")$&gt;</span></td>
+	<td><span class=tableEntry><$strMin("beta", "alpha")$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$strMin("alpha", "ALPHA")$&gt;</span></td>
+	<td><span class=tableEntry><$strMin("alpha", "ALPHA")$></span></td>
+</tr>
+<tr>
+	<td><span class=tableEntry>&lt;$strMin("ALPHA", "alpha")$&gt;</span></td>
+	<td><span class=tableEntry><$strMin("ALPHA", "alpha")$></span></td>
+</tr>
+
+
+</table>
+
+<$include std_page_end$>
+</body>
+</html>

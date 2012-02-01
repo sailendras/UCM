@@ -1,0 +1,43 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+NewIdocScript htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<!-- all components can modify this resource to add nodes to the
+     navigation areas -->
+<@dynamichtml custom_finish_layout_init@>
+	<$include super.custom_finish_layout_init$>
+
+	<$include how_to_components_menu$>
+	<$include new_idoc_script_link$>
+<@end@>
+
+
+<!-- add a drop-down menu or a new tray to contain all how to components -->
+<@dynamichtml how_to_components_menu@>
+<$if not how_to_components_menu_included$>
+
+	// add a drop-down menu, or a tray to the UI
+	navBuilder.addChildNodeTo('NAVTREE', 'collection', 'id==HOW_TO_COMPONENTS', 'label==How To Components');
+	if (navBuilder.menuB)
+		navBuilder.menuB.addTopLevelNode("HOW_TO_COMPONENTS");
+	else if (navBuilder.trayA)
+		navBuilder.trayA.addTopLevelNode("HOW_TO_COMPONENTS");
+
+	<$how_to_components_menu_included=1$>
+<$endif$>
+<@end@>
+
+
+<!-- the link to the new idocscript page -->
+<@dynamichtml new_idoc_script_link@>
+	navBuilder.addChildNodeTo('HOW_TO_COMPONENTS', 'item', 'id==NEW_IDOC_SCRIPT',
+		'label==New IdocScript', 'url==<$HttpCgiPath$>?IdcService=GET_DOC_PAGE&Action=GetTemplatePage&Page=IDOC_SCRIPT_TEST_PAGE');
+<@end@>
+
+
+</body></html>

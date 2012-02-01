@@ -60,6 +60,16 @@ VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_Pairing_2/ur
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_Pairing_2/url_paring_services.htm -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_Pairing_2/url_paring_services.htm.bak111411 -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_Pairing_2/url_paring_templates.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/NewIdocScript.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/classes/NewIdocScript/NewScriptExtensions.class -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/classes/NewIdocScript/NewScriptExtensions.java -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/idoc_script_test_page.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/lockwait.dat -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/manifest.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/new_idoc_script_extensions.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/new_idoc_script_resources.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/new_idoc_script_templates.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/readme.htm -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.classpath -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.externalToolBuilders/XMLBeansGen.launch -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.project -text

@@ -1,0 +1,19 @@
+###
+# Use this result set to include customized html pages into the server
+###
+@ResultSet NewIdocScriptTemplates
+5
+name
+class
+formtype
+filename
+description
+IDOC_SCRIPT_TEST_PAGE
+Document
+null
+idoc_script_test_page.htm
+Page for testing custom IdocScript variables and functions
+@end
+
+
+
