@@ -70,6 +70,17 @@ VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/new_idoc_scrip
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/new_idoc_script_resources.htm -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/new_idoc_script_templates.hda -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/NewIdocScript/readme.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/OracleFastCheckin.zip -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/classes.jar -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/fastcheckin_admin_10g.pdf -text svneol=unset#unset
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/lockwait.dat -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/manifest.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/manifest.zip -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/oraclefastcheckin.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/oraclefastcheckin_environment.cfg -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/readme.txt -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/resources/oraclefastcheckin_queries.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/OracleFastCheckin_bak0314/resources/oraclefastcheckin_services.htm -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.classpath -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.externalToolBuilders/XMLBeansGen.launch -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.project -text

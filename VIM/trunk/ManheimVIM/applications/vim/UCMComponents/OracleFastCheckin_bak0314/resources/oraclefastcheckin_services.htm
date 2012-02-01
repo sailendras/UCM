@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV='Content-Type' content='text/html; charset=iso-8859-1'>
+<TITLE>Standard Scripted Services</TITLE>
+</HEAD>
+<BODY>
+<@table OracleFastCheckin_Services@>
+<table border=1><caption><strong>Fast Checkin Services
+	</strong></caption>
+<tr>
+	<td>Name</td><td>Attributes</td><td>Actions</td>
+</tr>
+
+<tr>
+	<td>CHECKIN_NEW_SUB</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:setLocalValues:isCheckin,1,isNew,1,isInfoOnly,,isEditMode,1::null
+		3:checkDocRules:changeAuthor,newDoc::null
+		3:makeNewRevClass::0:null
+		3:validateStandard:::null
+		3:incrementAndSetID:1:0:null
+		3:validateCheckinData:Irevision,newRev::null
+		2:IcheckinItems::2:!csFailedToInsertCheckinItems(dID)
+		2:IrevisionFast::34:!csFailedToInsertRevision(dDocName)
+		2:Imeta::2:!csUnableToCheckIn(dDocName)
+		3:addFiles:Idocument:0:null
+		3:addWebFileDirect:IwebDocument:0:null
+		3:setStatusMessage:checkin:0:null
+		3:docHistoryInfo:Checkin,IdocHistory:1:null
+		2:DcheckinItems::0:!csFailedToRemoveCheckinItems(dID)</td>
+</tr>
+<tr>
+	<td>CHECKIN_UNIVERSAL</td>
+	<td>DocService
+		2
+		null
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:setConditionVars:noTransaction:0:null
+		3:checkSecurity::0:null
+		3:determineCheckin::0:null</td>
+</tr>
+<tr>
+	<td>CHECKIN_NEW</td>
+	<td>DocService
+		2
+		REDIRECT_TEMPLATE
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:setConditionVars:noTransaction::null
+		3:evaluate:<$include MLA_variables$>::null
+		3:prepareCheckinSecurity::0:null
+		3:checkSecurity::0:null
+		3:doSubService:CHECKIN_SUB_UNIVERSAL_IMAGE::null
+		3:evaluate:<$include MLA_db_variables_insert$>::null
+		3:doSubService:INSERT_URL_PARING_ROW_SUB:doNotLog:null
+		3:prepareRedirect:IdcService=CHECKIN_CONFIRM_FORM&dID=<$dID$>&dDocTitle=<$url(dDocTitle)$>&dDocName=<$url(dDocName)$>&dDocAuthor=<$url(dDocAuthor)$>:0:null</td>
+</tr>
+<tr>
+	<td>UPDATE_DOCINFO_BYFORM</td>
+	<td>DocService
+		2
+		REDIRECT_TEMPLATE
+		null
+		documents<br>
+		!csUnableToUpdateInfo(dDocName)</td>
+	<td>3:doSubService:UPDATE_DOCINFO_SUB:0:null
+		3:prepareRedirect:IdcService=DOC_INFO&dID=<$dID$>&dDocName=<$url(dDocName)$><$if IsWorkflowInfo$>&IsWorkflowInfo=<$IsWorkflowInfo$><$endif$>:0:null</td>
+</tr>
+<tr>
+	<td>UPDATE_DOCINFO</td>
+	<td>DocService
+		2
+		null
+		null
+		documents<br>
+		!csUnableToUpdateInfo(dDocName)</td>
+	<td>3:doSubService:UPDATE_DOCINFO_SUB:0:null</td>
+</tr>
+</table>
+<@end@>
+<br><br>
+</BODY>
+</HTML>

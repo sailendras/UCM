@@ -1,0 +1,79 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+EJFastCheckin query
+</title>
+</head>
+<body>
+
+<@table OracleFastCheckin_Queries@>
+<table border=1><caption><strong>Query Definition Table</strong></caption>
+<tr>
+	<td>name</td><td>queryStr</td><td>parameters</td>
+</tr>
+<tr>
+	<td>UnextRevClassIDIncrement</td>
+	<td>UPDATE Counters SET dNextIndex = (dNextIndex+?)
+		WHERE dCounterName = 'RevClassID'</td>
+	<td>Increment int</td>
+</tr>
+<tr>
+	<td>UnextRevIDIncrement</td>
+	<td>UPDATE Counters SET dNextIndex = (dNextIndex+?)
+		WHERE dCounterName='RevID'</td>
+	<td>Increment int</td>
+</tr>
+<tr>
+	<td>UnextDocIDIncrement</td>
+	<td>UPDATE Counters SET dNextIndex = (dNextIndex+?)
+		WHERE dCounterName='DocID'</td>
+	<td>Increment int</td>
+</tr>
+<tr>
+	<td>IrevisionFast</td>
+	<td>INSERT INTO Revisions (dID, dDocName, dDocType, dDocTitle, dDocAuthor,
+		dRevClassID, dRevisionID, dRevLabel, dIsCheckedOut, dDocAccount, dSecurityGroup,
+		dCreateDate, dInDate, dOutDate, dReleaseDate, dStatus, dReleaseState, 
+		dPublishType, dPublishState, dWorkflowState, dRevRank)
+		values(?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, 'RELEASED', 'Y', ?, ?, ?, 0)</td>
+	<td>dID int
+		dDocName varchar
+		dDocType varchar
+		dDocTitle varchar
+		dDocAuthor varchar
+		dRevClassID int
+		dRevisionID int
+		dRevLabel varchar
+		dDocAccount varchar
+		dSecurityGroup varchar
+		dCreateDate date
+		dInDate date
+		dOutDate date
+		dInDate date
+		dPublishType varchar
+		dPublishState varchar
+		dWorkflowState varchar
+	</td>
+</tr>
+<tr>
+	<td>UdProcessingStateToEmpty</td>
+	<td>UPDATE Revisions SET dProcessingState = '', dWebExtension = ?
+	WHERE dID = ?</td>
+	<td>dExtension varchar
+		dID int</td>
+</tr>
+<tr>
+	<td>IcheckinItems</td>
+	<td>INSERT INTO CheckinItems VALUES(?,?)</td>
+	<td>dID int
+		dCreateDate date</td>
+</tr>
+<tr>
+	<td>DcheckinItems</td>
+	<td>DELETE FROM CheckinItems WHERE dID = ?</td>
+	<td>dID int</td>
+</tr>
+</table>
+<@end@>
+</body></html>
