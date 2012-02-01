@@ -1,0 +1,54 @@
+﻿<?hda version="7.5.1 (050330)" jcharset=UTF8 encoding=utf-8?>
+@Properties LocalData
+serverVersion=7.1.2.166
+version=2007_06_28
+classpath=$COMPONENT_DIR/classes
+blFieldTypes=
+libpath=$COMPONENT_DIR/lib
+ComponentName=ScheduledEvent
+hasPreferenceData=false
+blDateFormat=M/d/yy {h:mm[:ss] {aa}[zzz]}!mAM,PM!tAmerica/Chicago
+@end
+@ResultSet Filters
+4
+type
+location
+parameter
+loadOrder
+checkScheduledEvents
+ScheduledEvent.CustomFrequentEvent
+checkScheduledEvents
+1
+scheduledSystemEvent
+ScheduledEvent.CustomSystemEvent
+scheduledSystemEvent
+1
+@end
+@ResultSet MergeRules
+4
+fromTable
+toTable
+column
+loadOrder
+CustomScheduledEvents
+IdcScheduledSystemEvents
+action
+1
+@end
+@ResultSet ResourceDefinition
+4
+type
+filename
+tables
+loadOrder
+resource
+scheduled_event_resource.htm
+null
+1
+@end
+@ResultSet ClassAliases
+2
+classname
+location
+@end
+

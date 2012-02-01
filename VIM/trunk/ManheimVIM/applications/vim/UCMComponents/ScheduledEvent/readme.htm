@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>ScheduledEvent Component</title>
+<style TYPE="text/css">
+<!--
+/* colors: sand: e5e7d4, grey 5F5F5F, yellow c7c093, red 993300, sage b8cbc2 */
+BODY {	background-color : #ffffff;	color : #000000; font-family : Verdana, Arial, Tahoma, Helvetica, sans-serif; font-size : 10pt; margin-left : 1em; margin-right : 0; }
+A:LINK, A:VISITED { color : #5F5F5F;}
+A:HOVER { background-color : #e5e7d4; color : #5F5F5F; }
+H1 { color : #993300; font-size : 16pt; padding-bottom : 5px; padding-top : 5px; padding-left : 5px; }
+H2 { color : #993300; font-size : 14pt;	margin-top : 2em; }
+H3 { color : #993300; font-size : 12pt; margin-top :1em; }
+H4 { color : #993300; font-size : 11pt;	padding-bottom : 2px; padding-top : 2px; padding-left : 2px; }
+H5 { color : #993300; font-size : 10pt; font-weight : 900; margin-bottom : -1em; }
+H6 { color : #993300; font-size : 10pt; font-weight : 800; margin-bottom : -1em; }
+TD { font-size : 10pt; }
+.alt { background-color : #e5e7d4; }
+.altBold { background-color : #e5e7d4; font-weight: bold; }
+.bold { font-weight: bold; }
+CODE { color : #993300; font-size: 8pt; }
+-->
+</style>
+</head>
+<body>
+
+<h1>HOWTO COMPONENTS</h1>
+
+<h3>ScheduledEvent</h3>
+
+<p>This component demonstrates how to hook into the content server scheduling
+system. This system is meant for processes that take some time to complete,
+so they never get executed more than once every five minutes. Typically,
+they are rarely executed more than once per day.</p>
+
+<p>The Java code leverages two hooks, 'checkScheduledEvents' and
+'scheduledSystemEvents'. The former will be executed about once every five
+minutes. The latter is used along with special IdocScript resources to
+conditionally execute at most once per hour. In this way, you can
+configure an event to fire every hour, or every night at midnight.</p>
+
+<p>To run some testing, you can modify the timestamps in the file:</p>
+
+<xmp>
+<stellent>/config/activestate.hda
+</xmp>
+
+<p>Each scheduled system event will have an entry in this file. To
+test the logic on when your event will fire, you can set the timestamp
+to be one hour, one day, or even one year in the past. Then restart
+the server. You may need to reboot twice if you have two events
+that have the same 'eventCategory', such as this sample.</p>
+
+<p>This component demonstrates:</p>
+<ul>
+<li>Custom Resources</li>
+<li>Filters with custom Java code</p>
+</ul>
+
+<br>
+
+<h3>Installation</h3>
+
+<p>This component will be installed when you install the component bundle
+"HowToComponents.zip". If you have not done so already, use the Component Wizard
+or the Component Installer on the Admin Server, and install the bundle
+"HowToComponents.zip." Then enable this component, and restart the content server.</p>
+
+<p>After installing the bundle, there will be the file "ScheduledEvent.zip" that
+can be used to install this component seperately.</p>
+
+<p>If you do not wish to install the entire HowToComponents bundle, you may
+instead just install the "ScheduledEvents.zip" component and restart the server.</p>
+
+</body>
+</html>

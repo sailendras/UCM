@@ -109,6 +109,15 @@ VIM/trunk/ManheimVIM/applications/vim/UCMComponents/RelatedContent/templates/loc
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/RelatedContent/templates/related_content.htm -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/RelatedContent/templates/related_types.htm -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/RelatedContent/templates/relatedcontent_template.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/ScheduledEvent.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/classes/ScheduledEvent/CustomFrequentEvent.class -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/classes/ScheduledEvent/CustomFrequentEvent.java -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/classes/ScheduledEvent/CustomSystemEvent.class -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/classes/ScheduledEvent/CustomSystemEvent.java -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/lockwait.dat -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/manifest.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/readme.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/scheduled_event_resource.htm -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.classpath -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.externalToolBuilders/XMLBeansGen.launch -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.project -text

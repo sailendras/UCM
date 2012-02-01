@@ -1,0 +1,99 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+ScheduledEvent staticResTable
+</title>
+</head>
+<body>
+
+<!-- this table configures how often the 'CustomScheuledEvents' action
+     will be taken. According to the table below, it will be executed
+     once per hour... but the number of hours can be changed by setting
+     the value for 'CustomEventIntervalInHours' in your config.cfg -->
+<@table CustomScheduledEvents@>
+<table border=1><caption><strong>CustomScheduledEvents</strong></caption>
+<tr>
+	<td>action</td>
+	<td>configIntervalKey</td>
+	<td>allowEventScript</td>
+	<td>intervalType</td>
+	<td>defaultInterval</td>
+	<td>eventCategory</td>
+</tr>
+<tr>
+	<td>CustomHourlyEvent</td>
+	<td>CustomHourlyEventInterval</td>
+	<td><$include set_doevent_for_custom_hourly_event$></td>
+	<td>inHours</td>
+	<td>1</td>
+	<td>ScheduledWork</td>
+</tr>
+<tr>
+	<td>CustomDailyEvent</td>
+	<td>CustomDailyEventInterval</td>
+	<td><$include set_doevent_for_custom_daily_event$></td>
+	<td>inDays</td>
+	<td>1</td>
+	<td>ScheduledWork</td>
+</tr>
+</table>
+<@end@>
+
+
+<!-- this is used by the scheduled events to see if it is time to
+     call the 'CustomHourlyEvent' action. The 'action' will be called
+     only if the value for 'doEvent' is set.
+
+     This is a good place to write custom IdocScript to determine if its
+     a good idea to run the event. Good triggers include looking to see
+     if a document is in a workflow, or the time of day, or if a query
+     returns any documents.
+
+     Since this is a simply hourly event, it will just always run.
+-->
+<@dynamichtml set_doevent_for_custom_hourly_event@>
+	<$doEvent = 1$>
+<@end@>
+
+
+<!-- this is used by the scheduled events to see if it is time to
+     call the 'CustomDailyEvent' action. The 'action' will be called
+     only if the value for 'doEvent' is set.
+
+     This is a good place to write custom IdocScript to determine if its
+     a good idea to run the event. Good triggers include looking to see
+     if a document is in a workflow, or the time of day, or if a query
+     returns any documents.
+
+     Since this is a daily event, which might tax the system, it will
+     only be run at about midnight.
+
+     If you have complex IdocScript that you wish to test, you should
+     either run it in in a sample HCST, or leverage the 7.5 'trace'
+     function to log information to the console.
+-->
+<@dynamichtml set_doevent_for_custom_daily_event@>
+
+	<!-- determine the current time -->
+	<$now = dateCurrent()$>
+
+	<!-- determine midnight, today -->
+	<$midnight = parseDate(formatDateOnly(now) & " 12:01 AM")$>
+
+	<!-- the difference between now, and midnight today -->
+	<$diff = toInteger(parseDate(now) - parseDate(midnight))$>
+
+	<!-- to be absolutely safe, and only fire this action between midnight
+	     and 2AM, we will will set 'doEvent' if the difference is between
+	     zero and two hours. -->
+	<$if diff > 0 and diff < (2*60*60*1000)$>
+		<$doEvent = 1$>
+	<$endif$>
+
+<@end@>
+
+
+
+</body>
+</html>
