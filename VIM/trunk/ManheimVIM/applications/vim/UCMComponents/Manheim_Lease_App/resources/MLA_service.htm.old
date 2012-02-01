@@ -1,0 +1,99 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+MLA service
+</title>
+</head>
+<body>
+
+<@table MLA_Services@>
+<table border=1><caption><strong>Scripts For Custom Services</strong></caption>
+<tr>
+	<td>Name</td><td>Attributes</td><td>Actions</td>
+</tr>
+
+
+
+
+
+
+<tr>
+	<td>CHECKIN_SUB_LEASE</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:evaluate:<$include MLA_variables$>::null
+		3:setLocalValues:isCheckin,1,isNew,1,isInfoOnly,,isEditMode,1,originalSource,CS,dLinkTypeID,5,isRelatedContent,1,xIsRecord,0::null
+		3:checkDocRules:changeAuthor,newDoc:0:null
+		3:makeNewRevClass::0:null
+		3:validateStandard::0:null
+		3:mapResultSet:QnextRevID,dNextIndex,dID:0:!csUnableToCheckIn(dDocName)
+		2:UnextRevID::0:null
+		3:checkCriteriaWorkflow::0:null
+		3:validateCheckinData:Irevision,newRev:0:null
+		2:Irevision::34:!csFailedToInsertRevision(dDocName)
+		2:Imeta::2:!csUnableToCheckIn(dDocName)
+		3:addFiles:Idocument:0:null
+		3:setStatusMessage:checkin:0:null
+		3:docHistoryInfo:Checkin,IdocHistory:1:null
+		3:docRefinery::0:!csCheckInUnableToInitiateRefinery(dDocName)</td>
+</tr>
+
+<tr>
+	<td>CHECKIN_NEW_LEASE</td>
+	<td>DocService
+		2
+		REDIRECT_TEMPLATE
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:prepareCheckinSecurity::0:null
+		3:checkSecurity::0:null
+		3:doSubService:CHECKIN_SUB_LEASE:beginTran,commitTran:null
+		3:prepareRedirect:IdcService=CHECKIN_CONFIRM_FORM&dID=<$dID$>&dDocTitle=<$url(dDocTitle)$>&dDocName=<$url(dDocName)$>&dDocAuthor=<$url(dDocAuthor)$>:0:null
+		3:execute_BusinessProcess:::null</td>
+</tr>
+<tr>
+	<td>CHECKIN_IMAGE</td>
+	<td>DocService
+		2
+		REDIRECT_TEMPLATE
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:prepareCheckinSecurity::0:null
+		3:checkSecurity::0:null
+		3:doSubService:CHECKIN_SUB_IMAGE:beginTran,commitTran:null
+		3:prepareRedirect:IdcService=CHECKIN_CONFIRM_FORM&dID=<$dID$>&dDocTitle=<$url(dDocTitle)$>&dDocName=<$url(dDocName)$>&dDocAuthor=<$url(dDocAuthor)$>:0:null</td>
+</tr>
+<tr>
+	<td>CHECKIN_SUB_IMAGE</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:evaluate:<$include MLA_variables$>::null
+		3:setLocalValues:dSecurityGroup,General_Image,isCheckin,1,isNew,1,isInfoOnly,,isEditMode,1::null
+		3:checkDocRules:changeAuthor,newDoc:0:null
+		3:makeNewRevClass::0:null
+		3:validateStandard::0:null
+		3:mapResultSet:QnextRevID,dNextIndex,dID:0:!csUnableToCheckIn(dDocName)
+		2:UnextRevID::0:null
+		3:checkCriteriaWorkflow::0:null
+		3:validateCheckinData:Irevision,newRev:0:null
+		2:Irevision::34:!csFailedToInsertRevision(dDocName)
+		2:Imeta::2:!csUnableToCheckIn(dDocName)
+		3:addFiles:Idocument:0:null
+		3:setStatusMessage:checkin:0:null
+		3:docHistoryInfo:Checkin,IdocHistory:1:null
+		3:docRefinery::0:!csCheckInUnableToInitiateRefinery(dDocName)</td>
+</tr>
+</table>
+<@end@>
+</body></html>

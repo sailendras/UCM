@@ -1,0 +1,199 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+MLA service
+</title>
+</head>
+<body>
+
+<@table MLA_Services@>
+<table border=1><caption><strong>Scripts For Custom Services</strong></caption>
+<tr>
+	<td>Name</td><td>Attributes</td><td>Actions</td>
+</tr>
+
+
+
+
+
+
+<tr>
+	<td>CHECKIN_SUB_LEASE</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:setLocalValues:isCheckin,1,isNew,1,isInfoOnly,,isEditMode,1,dDocType,Lease,createPrimaryMetaFile,1::null
+		3:evaluate:<$include MLA_variables$>::null
+		3:checkDocRules:changeAuthor,newDoc::null
+		3:makeNewRevClass::0:null
+		3:validateStandard:::null
+		3:incrementAndSetID:1::null
+		3:validateCheckinData:Irevision,newRev::null
+		2:IcheckinItems::mustExist:null
+		2:IrevisionFast::mustExist,retryQuery:!csFailedToInsertRevision(dDocName)
+		2:Imeta::2:!csUnableToCheckIn(dDocName)
+		3:addFiles:Idocument:0:null
+		3:addWebFileDirect:IwebDocument::null
+		3:setStatusMessage:checkin:0:null
+		3:docHistoryInfo:Checkin,IdocHistory:1:null
+		2:DcheckinItems:::!csFailedToRemoveCheckinItems(dID)</td>
+</tr>
+
+<tr>
+	<td>CHECKIN_NEW_LEASE</td>
+	<td>DocService
+		2
+		REDIRECT_TEMPLATE
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:evaluate:<$include MLA_variables$>::null
+		3:prepareCheckinSecurity::0:null
+		3:checkSecurity::0:null
+		3:doSubService:CHECKIN_SUB_LEASE:beginTran,commitTran:null
+		3:prepareRedirect:IdcService=CHECKIN_CONFIRM_FORM&dID=<$dID$>&dDocTitle=<$url(dDocTitle)$>&dDocName=<$url(dDocName)$>&dDocAuthor=<$url(dDocAuthor)$>:0:null</td>
+</tr>
+<tr>
+	<td>CHECKIN_IMAGE</td>
+	<td>DocService
+		2
+		REDIRECT_TEMPLATE
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:prepareCheckinSecurity::0:null
+		3:checkSecurity::0:null
+		3:doSubService:CHECKIN_SUB_IMAGE:beginTran,commitTran:null
+		3:evaluate:<$include MLA_db_variables_insert$>::null
+		3:doSubService:INSERT_URL_PARING_ROW_SUB:ignoreError,doNotLog:null
+		3:evaluate:<$include MLA_db_variables_update$>::null
+		3:doSubService:UPDATE_URL_PARING_ROW::null
+		3:prepareRedirect:IdcService=CHECKIN_CONFIRM_FORM&dID=<$dID$>&dDocTitle=<$url(dDocTitle)$>&dDocName=<$url(dDocName)$>&dDocAuthor=<$url(dDocAuthor)$>:0:null
+		3:doSubService:CHECKIN_SUB_LEASE::null</td>
+</tr>
+<tr>
+	<td>CHECKIN_SUB_IMAGE</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:setLocalValues:isInfoOnly,,dDocType,Image::null
+		3:evaluate:<$include MLA_variables$>::null
+		3:checkDocRules:changeAuthor,newDoc:ignoreError:null
+		3:makeNewRevClass::0:null
+		3:validateStandard::ignoreError:null
+		3:mapResultSet:QnextRevID,dNextIndex,dID:0:!csUnableToCheckIn(dDocName)
+		2:UnextRevID::0:null
+		3:checkCriteriaWorkflow::0:null
+		3:validateCheckinData:Irevision,newRev:ignoreError:null
+		2:Irevision::34:!csFailedToInsertRevision(dDocName)
+		2:Imeta::2:!csUnableToCheckIn(dDocName)
+		3:addFiles:Idocument:0:null
+		3:setStatusMessage:checkin:0:null
+		3:docHistoryInfo:Checkin,IdocHistory:1:null
+		3:docRefinery::0:!csCheckInUnableToInitiateRefinery(dDocName)</td>
+</tr>
+<tr>
+	<td>UPDATE_IMAGE</td>
+	<td>DocService
+		2
+		null
+		null
+		documents<br>
+		!csUnableToUpdateInfo(dDocName)</td>
+	<td>3:doSubService:UPDATE_DOCINFO_SUB:12:null
+		3:evaluate:<$include MLA_db_variables_update$>::null
+		3:doSubService:UPDATE_URL_PARING_ROW:ignoreError:null</td>
+</tr>
+
+<tr>
+	<td>CHECKIN_SUB_UNIVERSAL_IMAGE</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:setLocalValues:isInfoOnly,,dDocType,Image::null
+		3:evaluate:<$include MLA_variables$>::null
+		3:checkDocRules:changeAuthor,newDoc:0:null
+		3:makeNewRevClass::0:null
+		3:validateStandard::0:null
+		3:incrementAndSetID:1::null
+		3:validateCheckinData:Irevision,newRev:0:null
+		2:IcheckinItems::mustExist:!csFailedToInsertCheckinItems(dID)
+		2:IrevisionFast::mustExist,retryQuery:!csFailedToInsertRevision(dDocName)
+		2:Imeta::2:!csUnableToCheckIn(dDocName)
+		3:addFiles:Idocument:0:null
+		3:addWebFileDirect:IwebDocument::null
+		3:setStatusMessage:checkin:0:null
+		3:docHistoryInfo:Checkin,IdocHistory:1:null
+		2:DcheckinItems:::!csFailedToRemoveCheckinItems(dID)</td>
+</tr>
+<tr>
+	<td>CHECKIN_UNIVERSAL</td>
+	<td>DocService
+		2
+		REDIRECT_TEMPLATE
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:evaluate:<$include MLA_variables$>::null
+		3:prepareCheckinSecurity::0:null
+		3:checkSecurity::0:null
+		3:doSubService:CHECKIN_SUB_UNIVERSAL_IMAGE:beginTran,commitTran:null
+		3:evaluate:<$include MLA_db_variables_insert$>::null
+		3:doSubService:INSERT_URL_PARING_ROW_SUB::null
+		3:prepareRedirect:IdcService=CHECKIN_CONFIRM_FORM&dID=<$dID$>&dDocTitle=<$url(dDocTitle)$>&dDocName=<$url(dDocName)$>&dDocAuthor=<$url(dDocAuthor)$>:0:null</td>
+</tr>
+<tr>
+	<td>CHECKIN_IMAGE_NEW</td>
+	<td>DocService
+		2
+		REDIRECT_TEMPLATE
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:prepareCheckinSecurity::0:null
+		3:evaluate:<$include MLA_variables$>::null
+		3:checkSecurity::0:null
+		3:doSubService:CHECKIN_SUB_UNIVERSAL_IMAGE:beginTran,commitTran:null
+		3:evaluate:<$include MLA_db_variables_insert$>::null
+		3:doSubService:INSERT_URL_PARING_ROW_SUB:ignoreError,doNotLog:null
+		3:evaluate:<$include MLA_db_variables_update$>::null
+		3:doSubService:UPDATE_URL_PARING_ROW::null
+		3:prepareRedirect:IdcService=CHECKIN_CONFIRM_FORM&dID=<$dID$>&dDocTitle=<$url(dDocTitle)$>&dDocName=<$url(dDocName)$>&dDocAuthor=<$url(dDocAuthor)$>:0:null</td>
+</tr>
+<tr>
+	<td>CHECKIN_SUB_LEASE_NEW</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:setLocalValues:isCheckin,1,isNew,1,isInfoOnly,,isEditMode,1,dDocType,Lease::null
+		3:evaluate:<$include MLA_variables$>::null
+		3:checkDocRules:changeAuthor,newDoc:0:null
+		3:makeNewRevClass::0:null
+		3:validateStandard::0:null
+		3:incrementAndSetID:1::null
+		3:validateCheckinData:Irevision,newRev:0:null
+		2:IcheckinItems::mustExist:!csFailedToInsertCheckinItems(dID)
+		2:IrevisionFast::mustExist,retryQuery:!csFailedToInsertRevision(dDocName)
+		2:Imeta::2:!csUnableToCheckIn(dDocName)
+		3:addFiles:Idocument:0:null
+		3:addWebFileDirect:IwebDocument::null
+		3:setStatusMessage:checkin:0:null
+		3:docHistoryInfo:Checkin,IdocHistory:1:null
+		2:DcheckinItems:::!csFailedToRemoveCheckinItems(dID)</td>
+</tr>
+</table>
+<@end@>
+</body></html>

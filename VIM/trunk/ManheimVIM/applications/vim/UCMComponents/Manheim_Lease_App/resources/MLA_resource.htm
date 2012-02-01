@@ -1,0 +1,508 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+MLA htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<@dynamichtml checkin_page_content@>
+<$include std_page_begin$>
+<$include std_checkin_form_start$>
+<table border=0 cellpadding=2 cellspacing=0 summary="">
+<$include std_checkin_page_caption$>
+<$include std_extra_checkin_page_def$>
+<$include std_document_checkin_fields$>
+<tr>
+<$include std_checkin_submit_html$>
+</tr>
+</table>
+<$include std_checkin_form_end$>
+<$include std_checkin_clbra$>
+</script>
+<$include std_page_end$>
+<@end@>
+
+
+<@dynamichtml std_html_head_declarations@>
+<$include std_definitions$>
+<$if SetdID$>
+<$xSetdID = strGenerateRandom(30)$>
+<$endif$>
+<$include std_html_head_definition_declarations$>
+<$include shortcut_icon_link$>
+<$include std_js_bootstrap_vars$>
+<style TYPE="text/css">
+<!--
+<$include std_style_declarations$>
+-->
+</style>
+<script type="text/javascript">
+<$include std_javascript_header_functions$>
+</script>
+<$include std_schema_header$>
+<$include std_tracing_script_header$>
+<$include std_docprofile_header$>
+<@end@>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<@dynamichtml MLA_variables@>
+<!--test Lease-->
+<$if strEquals(dDocType,"Lease")$>
+	<$if tAdmin$>
+	    	<$dSecurityGroup="Admin_Lease"$>
+	<$else$>
+		<$dSecurityGroup="Lease"$>
+	<$endif$>
+	<$dOutDate=dateCurrent(Admin_Lease_Duration)$>
+	<$isCheckin=1$>
+	<$isNew=1$>
+	<$isEditMode=1$>
+	<$originalSource="CS"$>
+	<$dLinkTypeID=5$>
+	<$isRelatedContent=1$>
+	<$xIsRecord=0$>
+  	<$if originalID$>
+		<!--do nothing-->
+	<$else$>
+     		<$originalID=dID$>
+  	<$endif$>
+	<$if xImageId$>
+		<!--do nothing-->
+	<$else$>
+  		<$xImageId=dDocName$>
+	<$endif$>
+  	<!--if primaryFile:path-->
+		<!--do nothing-->
+	<!--else-->
+	<$primaryFile:path="/oracle/leaseFile.txt"$>
+	<$dOriginalName="leaseFile.txt"$>
+	<!--primaryFile="/oracle/leaseFile.txt"-->	
+	<!--endif-->
+  	<$dDocName=strSubstring(GUID,0,eval(cguidlength))$>  	
+	<$dDocTitle="Leasefor_"& xImageId$>
+  	<$xRetain="True"$>
+   	<$xNewUrl=cbaseurlstr & "/" & strSubstring(xImageId,0,2)  & "/" & strSubstring(dDocName,2,4)  & "/"  & dDocName$>
+  	<$xPackagedConversions=""$>
+	<!--createPrimaryMetaFile="true"-->
+	<$xPartitionId="active"$>
+	<!--xStorageRule="vim"-->	
+	<$if xStorageRule$>
+		<!--do nothing-->
+	<$else$>
+     		<$xStorageRule="vimactive"$>
+  	<$endif$>
+	<$xWebFlag=0$>
+<!--test image-->
+<$elseif strEquals(dDocType,"Image")$>
+	<$isCheckin=1$>
+	<$isNew=1$>
+	<$isEditMode=1$>
+  	<$if dSecurityGroup$>
+  	<$else$>
+  		<$dSecurityGroup="General_Image"$>
+  	<$endif$>
+  	<!--xPackagedConversions="vim"-->
+  	<!--dDocName=strGenerateRandom(eval(cguidlength))-->
+  	<$dDocName=strSubstring(GUID,0,eval(cguidlength))$>
+  	<$xImageId=dDocName$>
+	<$dDocTitle="Image_"&dDocName$>
+  	<$xNewUrl=cbaseurlstr & "/" & strSubstring(dDocName,0,2) & "/" & strSubstring(dDocName,2,4) & "/" & dDocName$>
+	<$xsvcurl=cbaseurlstr &  "/VimWebApp/img/" & strLower(dDocName) &".jpg"$>
+
+	<$tAdmin="true"$>
+	<$if xPartitionId$>
+		<!--do nothing-->
+	<$else$>
+     		<$xPartitionId="active"$>
+  	<$endif$>
+	<$if xStorageRule$>
+		<!--do nothing-->
+	<$else$>
+     		<$xStorageRule="vimactive"$>
+  	<$endif$>
+	<!--xPartitionId="active"-->
+	<!--xStorageRule="vim"-->	
+	<$xWebFlag=0$>
+<$else$>
+<!--this is a place holder for any new dDocType tests-->
+<$endif$>
+<@end@>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<@dynamichtml custom_docinfo_menus_setup@>
+<$if dDocType like "Image"$>
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "LEASE_ACTIONS"$>
+	<$PageMenusData.parentId = "HEADER_MENU"$>
+	<$PageMenusData.label = "Lease"$>
+	<$PageMenusData.type = "collection"$>
+	<$PageMenusData.loadOrder = 100$>
+	
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "LEASE_FORM"$>
+	<$PageMenusData.parentId = "LEASE_ACTIONS"$>
+	<$PageMenusData.label = "Create Lease"$>
+	<$PageMenusData.type = "item"$>
+	<$PageMenusData.href = HttpCgiPath & "?IdcService=CHECKIN_NEW_FORM&xProfileTrigger=Image&dpDisplayLabel=Lease&originalSource=CS&originalID="&dID&"&dLinkTypeID=5&isRelatedContent=1&xIsRecord=0&dSecurityGroup=Public"$>
+	<$PageMenusData.loadOrder = 20$>
+	
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "LEASE_LIST"$>
+	<$PageMenusData.parentId = "LEASE_ACTIONS"$>
+	<$PageMenusData.label = "Current Leases"$>
+	<$PageMenusData.type = "item"$>
+	<$PageMenusData.href = HttpCgiPath & "?IdcService=GET_RELATED_CONTENT&dID="&dID&"&dLinkTypeID=5"$>
+	<$PageMenusData.loadOrder = 20$>
+	
+	<$include super.custom_docinfo_menus_setup$>
+<$endif$>
+<@end@>
+
+<@dynamichtml custom_doc_info_links@>
+<tr>
+    <td nowrap align="right"><span class="infoLabel"><$lc("wwRelatedContentLabel")$></span></td>
+
+   <td>
+    <span class="tableEntry"><a href="<$HttpCgiPath$>?IdcService=GET_RELATED_CONTENT&dID=<$dID$>&dLinkTypeID=5">Lease</a><$if dIsLinked$><$linkFlag$><$endif$></span>
+   </td>
+
+<$if strIndexOf(dDocType,"Lease") >=0$>
+
+   <tr>
+    <td nowrap align="right"><span class="infoLabel">&nbsp;</span></td>
+
+    <td>
+     <span class="tableEntry">&nbsp;&nbsp;&nbsp;&nbsp;<a href="<$HttpCgiPath$>?IdcService=GET_RELATED_CONTENT&dID=<$dID$>&dLinkTypeID=5&isGetParents=1">Linked Image</a></span>
+    </td>
+   </tr>
+<$endif$>
+<@end@>
+
+<@dynamichtml setup_search_results_action_popups@>
+<$exec rsAppendNewRow("PopupProps")$>
+	<$exec setValue("PopupProps", "label", "Create Lease")$>
+	<$exec setValue("PopupProps", "function", "<$HttpCgiPath $>?IdcService=CHECKIN_NEW_FORM&xProfileTrigger=Image&dpDisplayLabel=Lease&originalSource=CS&originalID=<$dID$>&dLinkTypeID=5&isRelatedContent=1&xIsRecord=0&dSecurityGroup=Public&xImageId=<$dDocName$>")$>
+	<$exec setValue("PopupProps", "ifClause", "dDocType like 'Image'")$>
+	<$exec setValue("PopupProps", "linkTarget", "<$docLinkTarget$>")$>
+	<$exec setValue("PopupProps", "class", "document")$>
+	<$exec setValue("PopupProps", "id", "leaseform")$>
+	
+	<$exec rsAppendNewRow("PopupProps")$>
+	<$exec setValue("PopupProps", "label", "Current Leases")$>
+	<$exec setValue("PopupProps", "function", "<$HttpCgiPath$>?IdcService=GET_RELATED_CONTENT&dID=<$dID$>&dLinkTypeID=5")$>
+	<$exec setValue("PopupProps", "ifClause", "dDocType like 'Image'")$>
+	<$exec setValue("PopupProps", "linkTarget", "<$docLinkTarget$>")$>
+	<$exec setValue("PopupProps", "class", "document")$>
+	<$exec setValue("PopupProps", "id", "leaselist")$>
+
+<$include super.setup_search_results_action_popups$>
+<@end@>
+
+<@table Manheim_Lease_App_resource@>
+<table border=1><caption><strong>
+
+<tr>
+<td>action</td><td>configIntervalKey</td><td>allowEventScript</td><td>intervalType</td><td>defaultInterval</td><td>eventCategory</td>
+</tr>
+
+<tr>
+<td>NotificationOfExpiration</td><td>NotificationIntervalInDays</td><td><$include set_doevent_for_notification_of_expiration$></td><td>inDays</td><td>30</td><td>ScheduledWork</td>
+</tr>
+</table>
+
+<@end@>
+
+
+
+<@dynamichtml MLA_db_variables_insert@>
+<$auctionId=xAuctionId$>
+<$woNum=xWorkOrderNumber$>
+<$imageSeq=xImageSequence$>
+<$vimUrl=xNewUrl$>
+<$createdAt=dInDate$>
+<$dDocName=dDocName$>
+<@end@>
+
+
+
+
+
+<@dynamichtml MLA_db_variables_update@>
+<$auctionId=xAuctionId$>
+<$woNum=xWorkOrderNumber$>
+<$imageSeq=xImageSequence$>
+<$vimUrl=xNewUrl$>
+<$updatedAt=dInDate$>
+<@end@>
+
+
+
+
+
+</body></html>

@@ -1,0 +1,44 @@
+﻿<?hda version="10.1.3.5.1 (100623)" jcharset=UTF8 encoding=utf-8?>
+@Properties LocalData
+version=2012_01_10(backup)
+blFieldTypes=
+ComponentName=Manheim_Lease_App
+hasPreferenceData=false
+blDateFormat=M/d/yy {h:mm[:ss] {aa}[zzz]}!mAM,PM!tAmerica/Chicago
+@end
+@ResultSet ResourceDefinition
+4
+type
+filename
+tables
+loadOrder
+resource
+resources/MLA_resource.htm
+null
+10
+service
+resources/MLA_service.htm
+MLA_Services
+10
+@end
+@ResultSet Filters
+4
+type
+location
+parameter
+loadOrder
+@end
+@ResultSet MergeRules
+4
+fromTable
+toTable
+column
+loadOrder
+@end
+@ResultSet ClassAliases
+3
+classname
+location
+loadOrder
+@end
+
