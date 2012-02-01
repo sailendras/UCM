@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>NewIdocScript Component</title>
+<style TYPE="text/css">
+<!--
+/* colors: sand: e5e7d4, grey 5F5F5F, yellow c7c093, red 993300, sage b8cbc2 */
+BODY {	background-color : #ffffff;	color : #000000; font-family : Verdana, Arial, Tahoma, Helvetica, sans-serif; font-size : 10pt; margin-left : 1em; margin-right : 0; }
+A:LINK, A:VISITED { color : #5F5F5F;}
+A:HOVER { background-color : #e5e7d4; color : #5F5F5F; }
+H1 { color : #993300; font-size : 16pt; padding-bottom : 5px; padding-top : 5px; padding-left : 5px; }
+H2 { color : #993300; font-size : 14pt;	margin-top : 2em; }
+H3 { color : #993300; font-size : 12pt; margin-top :1em; }
+H4 { color : #993300; font-size : 11pt;	padding-bottom : 2px; padding-top : 2px; padding-left : 2px; }
+H5 { color : #993300; font-size : 10pt; font-weight : 900; margin-bottom : -1em; }
+H6 { color : #993300; font-size : 10pt; font-weight : 800; margin-bottom : -1em; }
+TD { font-size : 10pt; }
+.alt { background-color : #e5e7d4; }
+.altBold { background-color : #e5e7d4; font-weight: bold; }
+.bold { font-weight: bold; }
+CODE { color : #993300; font-size: 8pt; }
+-->
+</style>
+</head>
+<body>
+
+<h1>HOWTO COMPONENTS</h1>
+
+<h3>NewIdocScript</h3>
+
+<p>This component demonstrates how to create custom IdocScript with a
+component. This is useful when you wish to be able to execute custom
+Java code frequently, on any template page.</p>
+
+<p>Some examples of new variables include: an uppercase version of the
+user's full name, the current day of the week, a check for if the
+date is even, and a check for if the current user has a particular
+security clearance.</p>
+
+<p>Some examples of new functions include: mathematical functions that
+cannot be performed simply with IdocScript, string sorting functions,
+or cryptographically strong hashes of strings.</p>
+
+<p>This component demonstrates:</p>
+<ul>
+<li>Custom Templates</li>
+<li>New IdocScript functions with custom Java code</li>
+</ul>
+
+<br>
+
+<h3>Installation</h3>
+
+<p>This component will be installed when you install the component bundle 
+"HowToComponents.zip". If you have not done so already, use the Component Wizard 
+or the Component Installer on the Admin Server, and install the bundle 
+"HowToComponents.zip." Then enable this component, and install the content server.</p>
+
+<p>After installing the bundle, there will be the file "NewIdocScript.zip" that
+can be used to install this component seperately.</p>
+
+<p>After restarting the content server, you should either see a drop down menu,
+or a Tray, called <code>'HowToComponents'</code>, in which you will see a link called
+<code>'NewIdocScript'</code>. Select this link to take you to a page that demonstrates
+the new IdocScript functions.</p>
+
+
+</body>
+</html>

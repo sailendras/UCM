@@ -1,0 +1,37 @@
+﻿<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+
+<!-- This table is required to integrate the custom Java code for
+     customized IdocScript.
+     
+     The 'name' value should be unique to the component.  Otherwise, if
+     one of the standard names is used, the class loaded here will override 
+     the functionality of that class. -->
+     
+<@table ManheimIdocScriptExtenstionsExtensions@>
+<table border=1><caption><strong>NewIdocScript Extensions
+	</strong></caption>
+<tr>
+	<td>name</td><td>class</td><td>loadOrder</td>
+</tr>
+<tr>
+	<td>NewIdocScriptEvaluations</td>
+	<td>NewIdocScript.NewScriptExtensions</td>
+	<td>10</td>
+</tr>
+</table>
+<@end@>
+
+
+
+<!-- a test... -->
+<@dynamichtml std_checkin_submit_extra_actions@>
+<$include super.std_checkin_submit_extra_actions$>
+<@end@>
+
+</BODY>
+</HTML>

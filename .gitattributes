@@ -9,6 +9,14 @@ VIM/trunk/ManheimVIM/applications/vim/ManifestCreator/src/ManifestCreator.java -
 VIM/trunk/ManheimVIM/applications/vim/Replicator/.classpath -text
 VIM/trunk/ManheimVIM/applications/vim/Replicator/.project -text
 VIM/trunk/ManheimVIM/applications/vim/Replicator/src/Replicator.java -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/classes/NewIdocScript/NewScriptExtensions.class -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/classes/NewIdocScript/NewScriptExtensions.java -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/lockwait.dat -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/manheimidocscriptextenstions.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/manifest.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/manifest.zip -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/new_idoc_script_extensions.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/readme.htm -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/Manheim_Lease_App.hda -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/Manheim_Lease_App.zip -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/lockwait.dat -text

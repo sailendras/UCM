@@ -1,0 +1,24 @@
+﻿<?hda version="10.1.3.5.1 (100623)" jcharset=UTF8 encoding=utf-8?>
+@Properties LocalData
+blFieldTypes=CreateDate date
+blDateFormat=M/d/yy {h:mm[:ss] {aa}[zzz]}!mAM,PM!tAmerica/New_York
+BackupZipName=/oracle/ucm/server/data/components/ManheimIdocScriptExtenstions/ManheimIdocScriptExtenstions-20110705150848.zip
+Backup=true
+ComponentName=ManheimIdocScriptExtenstions
+ZipName=/oracle/ucm/server/custom/ManheimIdocScriptExtenstions/manifest.zip
+Overwrite=false
+CreateDate=7/5/11 2:51 PM
+Install=true
+@end
+@ResultSet Manifest
+2
+entryType
+location
+component
+ManheimIdocScriptExtenstions/manheimidocscriptextenstions.hda
+componentExtra
+ManheimIdocScriptExtenstions/readme.htm
+componentClasses
+ManheimIdocScriptExtenstions/classes/
+@end
+
