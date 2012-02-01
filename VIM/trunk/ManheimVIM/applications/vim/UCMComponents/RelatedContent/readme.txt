@@ -1,0 +1,1 @@
+﻿RelatedContent Component

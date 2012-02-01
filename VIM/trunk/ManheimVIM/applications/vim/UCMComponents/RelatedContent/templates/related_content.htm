@@ -1,0 +1,368 @@
+<$include std_doctype_html_decl$>
+
+<$originalID=getValue("DOC_INFO", "dID")$>
+<$originalName=getValue("DOC_INFO", "dDocName")$>
+<$originalTitle=getValue("DOC_INFO", "dDocTitle")$>
+<$originalIsRecord=getValue("DOC_INFO", "xIsRecord")$>
+
+<$if not originalIsRecord$>
+	<$originalIsRecord=0$>
+<$endif$>
+
+<$originalSource=getValue("#local", "dSource")$>
+<$if not originalSource$>
+	<$originalSource="CS"$>
+<$endif$>
+
+<$relatedTypeName=getValue("RelatedTypeInfo", "dLinkTypeName")$>
+<$relatedTypeDestName=getValue("RelatedTypeInfo", "dLinkTypeDestName")$>
+<$relatedTypeClassID=getValue("RelatedTypeInfo", "dLinkClassID")$>
+<$relatedTypeIsSystem=getValue("RelatedTypeInfo", "dIsSystemLink")$>
+
+<$if isGetParents and isFalse(isGetParents)$>
+	<$isGetParents=""$>
+<$endif$>
+
+<$isChainedList=""$>
+<$if strEquals(relatedTypeClassID, "CL")$>
+	<$isChainedList=1$>
+<$endif$>
+
+<$isSupersedesType=""$>
+<$if isChainedList and isTrue(relatedTypeIsSystem)$>
+	<$isSupersedesType=1$>
+<$endif$>
+
+<$isRmaInstalled=""$>
+<$if IsRecordsManagementInstalled and isTrue(IsRecordsManagementInstalled)$>
+	<$isRmaInstalled=1$>
+<$endif$>
+
+<$isShowCreateLinks=""$>
+<$if (not isGetParents) and ((not isRmaInstalled) or hasRmaRights("record.createlink"))$>
+	<$isShowCreateLinks=1$>
+<$endif$>
+
+<$isShowDeleteLink=""$>
+<$if (not isGetParents) and ((not isRmaInstalled) or hasRmaRights("record.unlink"))$>
+	<$isShowDeleteLink=1$>
+<$endif$>
+
+<$if isSupersedesType$>
+	<$title2="Superseded"$>
+<$elseif isGetParents$>
+	<$title2=relatedTypeDestName$>
+<$else$>
+	<$title2=relatedTypeName$>
+<$endif$>
+
+<head>
+	<$defaultPageTitle=lc("wwRelatedContent")$>
+	<$include std_html_head_declarations$>
+
+	<script language="JavaScript">
+		function deleteRelatedContent(deleteSource, docID, frm, isReciprocal)
+		{
+			if (confirm("<$lc("wwRelatedContentDeleteConfirm")$>"))
+			{
+				var deleteID;
+
+				deleteID = deleteSource + ":" + docID;
+				frm["deleteLinkID"].value = deleteID;
+
+				if (isReciprocal)
+				{
+					frm["isReciprocal"].value = "1";
+				}
+
+				frm.submit();
+			}
+		}
+
+		<$include do_option_action_script$>
+	</script>
+</head>
+
+<$include body_def$>
+
+<$include std_page_begin$>
+
+<$include std_header$>
+
+<!-- Add menu resources -->
+<$headerMenuId = "HEADER_MENU"$>
+
+<$exec rsCreateResultSet("PageMenusData", "nodeId,parentId,label,type,href,loadOrder")$>
+<$exec rsMakeFromString("PageMenusIds", "HEADER_MENU")$>
+
+<$if isShowCreateLinks$>
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "LINK_MENU"$>
+	<$PageMenusData.parentId = "HEADER_MENU"$>
+	<$PageMenusData.label = "wwRelatedContentLink"$>
+	<$PageMenusData.type = "collection"$>
+	<$PageMenusData.loadOrder = 10$>
+
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "LINK_NEW"$>
+	<$PageMenusData.parentId = "LINK_MENU"$>
+	<$PageMenusData.label = "wwRelatedContentLinkNewItem"$>
+	<$PageMenusData.type = "item"$>
+	<$PageMenusData.loadOrder = 10$>
+	<$PageMenusData.href = HttpCgiPath & "?IdcService=CHECKIN_NEW_FORM&originalSource=" & originalSource & "&originalID=" & originalID
+		& "&dLinkTypeID=" & dLinkTypeID & "&isRelatedContent=1&xIsRecord=" & originalIsRecord & "&dSecurityGroup=RecordsGroup"$>
+
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "LINK_EXISTING"$>
+	<$PageMenusData.parentId = "LINK_MENU"$>
+	<$PageMenusData.label = "wwRelatedContentLinkExistingItem"$>
+	<$PageMenusData.type = "item"$>
+	<$PageMenusData.loadOrder = 10$>
+	<$PageMenusData.href = HttpCgiPath & "?IdcService=GET_DOC_PAGE&Action=GetTemplatePage&Page=STANDARD_QUERY_PAGE"
+		& "&originalSource=" & originalSource & "&originalID=" & originalID & "&originalName=" & originalName
+		& "&dLinkTypeID=" & dLinkTypeID & "&dLinkClassID=" & dLinkClassID & "&isRelatedContent=1"$>
+
+	<$loop ExternalSource$>
+		<$curSource=getValue("ExternalSource", "sourceName")$>
+
+		<$if strEquals(curSource, "Physical") or (ShowCreateExternalMenu and isTrue(ShowCreateExternalMenu))$>
+			<$exec rsAppendNewRow("PageMenusData")$>
+			<$PageMenusData.nodeId = "LINK_NEW_" & curSource$>
+			<$PageMenusData.parentId = "LINK_MENU"$>
+			<$PageMenusData.label = lc("wwRelatedContentLinkNewExternalItem", curSource)$>
+			<$PageMenusData.type = "item"$>
+			<$PageMenusData.loadOrder = 10$>
+			<$PageMenusData.href = HttpCgiPath & "?IdcService=CREATE_EXTERNAL_ITEM_FORM&dSource=" & curSource
+				& "&originalSource=" & originalSource & "&originalID=" & originalID
+				& "&dLinkTypeID=" & dLinkTypeID & "&isRelatedContent=1&xIsRecord=" & originalIsRecord & "&dSecurityGroup=RecordsGroup"$>
+		<$endif$>
+
+		<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId = "LINK_EXISTING_" & curSource$>
+		<$PageMenusData.parentId = "LINK_MENU"$>
+		<$PageMenusData.label = lc("wwRelatedContentLinkExistingExternalItem", curSource)$>
+		<$PageMenusData.type = "item"$>
+		<$PageMenusData.loadOrder = 10$>
+		<$PageMenusData.href = HttpCgiPath & "?IdcService=SEARCH_EXTERNAL_ITEM_FORM&dSource=" & curSource
+			& "&originalSource=" & originalSource & "&originalID=" & originalID & "&originalName=" & originalName
+			& "&dLinkTypeID=" & dLinkTypeID & "&dLinkClassID=" & dLinkClassID & "&isRelatedContent=1"$>
+	<$endloop$>
+<$endif$>
+
+<$if strEquals(originalSource, "CS")$>
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "INFO"$>
+	<$PageMenusData.parentId = "HEADER_MENU"$>
+	<$PageMenusData.label = "wwContentInformation"$>
+	<$PageMenusData.type = "item"$>
+	<$PageMenusData.loadOrder = 10$>
+	<$PageMenusData.href = HttpCgiPath & "?IdcService=DOC_INFO&dID=" & originalID & strTrimWs(inc("related_content_core_content_param"))$>
+<$else$>
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "INFO"$>
+	<$PageMenusData.parentId = "HEADER_MENU"$>
+	<$PageMenusData.label = "wwContentInformation"$>
+	<$PageMenusData.type = "item"$>
+	<$PageMenusData.loadOrder = 10$>
+	<$PageMenusData.href = HttpCgiPath & "?IdcService=INFO_EXTERNAL_ITEM_FORM&dSource=" & originalSource & "&dID=" & originalID & strTrimWs(inc("related_content_core_content_param"))$>
+<$endif$>
+
+<$pageTitle=lc("wwRelatedContentForItem", originalTitle, title2)$>
+<$include page_menus_js_object_setup$>
+<$include std_page_heading$>
+
+<br style="line-height:15px">
+
+<$infoTableId=1, columnCount=0, rowCount=0$>
+<table class="xuiListTable" style="width:100%" border="0" cellpadding="0" cellspacing="0">
+	<tr class="xuiAltHeader">
+		<!-- Content ID Column Header -->
+		<$columnCount = columnCount + 1$>
+		<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:350px;vertical-align:middle">
+			<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+				<$lc("wwXuiId")$>
+			</div>
+		</td>
+
+		<!-- Title Column Header -->
+		<$columnCount = columnCount + 1$>
+		<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+		<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:auto;vertical-align:middle">
+			<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+				<$lc("wwTitle")$>
+			</div>
+		</td>
+
+		<!-- Date Column Header -->
+		<$columnCount = columnCount + 1$>
+		<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+		<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:100px;vertical-align:middle">
+			<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+				<$lc("wwXuiDate")$>
+			</div>
+		</td>
+
+		<!-- Author Column Header -->
+		<$columnCount = columnCount + 1$>
+		<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+		<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:100px;vertical-align:middle">
+			<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+				<$lc("wwAuthor")$>
+			</div>
+		</td>
+
+		<!-- ACTIONS Column Header -->
+		<$columnCount = columnCount + 1$>
+		<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+		<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:100px;vertical-align:middle">
+			<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+				<$lc("wwActions")$>
+			</div>
+		</td>
+	</tr>
+
+	<!-- Phantom row columns provide drag-enabled cells between data cells -->
+	<tr>
+		<$phantomColumnCount=2$>
+		<td style="font-size:1px">&nbsp;</td>
+		<$loopwhile phantomColumnCount <= columnCount$>
+			<td rowspan="1000" class="xuiListResizeDragCell_Item" style="font-size:1px"
+				<$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$phantomColumnCount - 1$>', 'column_<$infoTableId$>_<$phantomColumnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>>&nbsp;</td>
+			<td style="font-size:1px">&nbsp;</td>
+			<$phantomColumnCount=phantomColumnCount+1$>
+		<$endloop$>
+	</tr>
+
+	<$loop RelatedContent$>
+		<$currentID=getValue("RelatedContent", "dID")$>
+		<$currentDocName=getValue("RelatedContent", "dDocName")$>
+		<$currentDocTitle=getValue("RelatedContent", "dDocTitle")$>
+		<$currentSupersededDate=getValue("RelatedContent", "xRecordSupersededDate")$>
+
+		<$currentSource=getValue("RelatedContent", "dSource")$>
+		<$if strEquals(currentSource, "CS")$>
+			<$currentDate=getValue("RelatedContent", "dInDate")$>
+		<$else$>
+			<$currentDate=getValue("RelatedContent", "dLastModifiedDate")$>
+		<$endif$>
+
+		<$currentDocAuthor=getValue("RelatedContent", "dDocAuthor")$>
+
+		<$if isChainedList or not strEquals(originalID, currentID)$>
+
+		<$if rowCount%2 == 0$>
+			<$rowClass="xuiListContentCell_Odd"$>
+		<$else$>
+			<$rowClass="xuiListContentCell_Even"$>
+		<$endif$>
+
+		<tr class="<$rowClass$>">
+
+			<!-- Content ID cell -->
+			<td class="<$rowClass$>" style="vertical-align:middle">
+				<div class="xuiDisplayText" style="overflow:hidden;text-align:left;white-space:nowrap" nowrap>
+					<b><$currentDocName$><b>&nbsp;
+					<$if currentSource and not strEquals(currentSource, "CS")$>(<$currentSource$>)<$endif$>
+				</div>
+			</td>
+
+			<!-- Title cell -->
+			<td class="<$rowClass$>" style="vertical-align:middle">
+				<div class="xuiDisplayText" style="overflow:hidden;text-align:left;white-space:nowrap" nowrap>
+					&nbsp;<$currentDocTitle$>&nbsp;
+					<$if isSupersedesType and currentSupersededDate$>(Superseded)<$endif$>
+				</div>
+			</td>
+
+			<!-- Date cell -->
+			<td class="<$rowClass$>" style="vertical-align:middle">
+				<div class="xuiDisplayText" style="overflow:hidden;text-align:center;white-space:nowrap" nowrap>
+					<$formatDateOnly(currentDate)$>&nbsp;
+				</div>
+			</td>
+
+			<!-- Author cell -->
+			<td class="<$rowClass$>" style="vertical-align:middle">
+				<div class="xuiDisplayText" style="overflow:hidden;text-align:center;white-space:nowrap" nowrap>
+					<$currentDocAuthor$>&nbsp;
+				</div>
+			</td>
+
+			<!-- Action cell -->
+			<td class="<$rowClass$>" style="vertical-align:middle;width:auto">
+				<div class="xuiDisplayText_Sm" style="overflow:hidden;text-align:center;white-space:nowrap" nowrap>
+					<$if not isGetParents$>
+						<img id="actIcon_<$currentID$>" alt="<$lc("wwActions")$>" src="<$lm_action_image$>"
+							height="16" width="16" border="0" onclick="showPopup('popup_<$currentID$>', 'actIcon_<$currentID$>', event);">
+					<$endif$>
+
+					<$if strEquals(currentSource, "CS")$>
+						<a href="<$HttpCgiPath$>?IdcService=DOC_INFO&dID=<$currentID$><$strTrimWs(inc("related_content_core_content_param"))$>" alt="Info">
+							<img src="<$lm_info_image$>" alt="<$lc("wwInfo")$>" height="16" width="16" border="0"></a>
+					<$else$>
+						<a href="<$HttpCgiPath$>?IdcService=INFO_EXTERNAL_ITEM_FORM&dSource=<$currentSource$>&dID=<$currentID$><$strTrimWs(inc("related_content_core_content_param"))$>" alt="Info">
+							<img src="<$lm_info_image$>" alt="<$lc("wwInfo")$>" height="16" width="16" border="0"></a>
+					<$endif$>
+				</div>
+
+				<$if not isGetParents$>
+					<div class="xuiPopupContainer" id="popup_<$currentID$>" style="display:none;white-space:nowrap;z-index:99" nowrap>
+						<table class="xuiPopupTable">
+						<tr>
+							<td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+								onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+								<$if strEquals(currentSource, "CS")$>
+									<a class="menuA_ChildLinkText" href="<$HttpCgiPath$>?IdcService=DOC_INFO&dID=<$currentID$><$strTrimWs(inc("related_content_core_content_param"))$>"
+										target="_self"><$lc("wwDocInfoTitle")$></a>
+								<$else$>
+									<a class="menuA_ChildLinkText" href="<$HttpCgiPath$>?IdcService=INFO_EXTERNAL_ITEM_FORM&dSource=<$currentSource$>&dID=<$currentID$><$strTrimWs(inc("related_content_core_content_param"))$>"
+										target="_self"><$lc("wwDocInfoTitle")$></a>
+								<$endif$>
+							</td>
+						</tr>
+
+						<$if isShowDeleteLink and (not strEquals(currentID, originalID))$>
+							<tr>
+								<td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+									onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+									<a class="menuA_ChildLinkText" href="javascript:deleteRelatedContent('<$currentSource$>', '<$currentID$>', document.DeleteRelatedFrm, false)"
+										target="_self"><$lc("wwRelatedContentUnlink")$></a>
+								</td>
+							</tr>
+
+							<$if strEquals(relatedTypeClassID, "CR")$>
+								<tr>
+									<td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+										onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+										<a class="menuA_ChildLinkText" href="javascript:deleteRelatedContent('<$currentSource$>', '<$currentID$>', document.DeleteRelatedFrm, true)"
+											target="_self"><$lc("wwRelatedContentUnlinkReciprocal")$></a>
+									</td>
+								</tr>
+							<$endif$>
+						<$endif$>
+						</table>
+					</div>
+				<$endif$>
+			</td>
+		</tr>
+
+		<$rowCount=rowCount + 1$>
+
+		<$endif$>
+
+	<$endloop$>
+</table>
+
+<form name="DeleteRelatedFrm" action="<$HttpCgiPath$>" method="GET">
+	<input type=hidden name=IdcService value="DELETE_RELATED_CONTENT">
+	<input type=hidden name=dSource value="<$originalSource$>">
+	<input type=hidden name=dID value="<$url(originalID)$>">
+	<input type=hidden name=dLinkTypeID value="<$dLinkTypeID$>">
+	<input type=hidden name=deleteLinkID value="">
+	<input type=hidden name=isReciprocal value="">
+</form>
+
+<$include std_page_end$>
+
+</body>
+</html>

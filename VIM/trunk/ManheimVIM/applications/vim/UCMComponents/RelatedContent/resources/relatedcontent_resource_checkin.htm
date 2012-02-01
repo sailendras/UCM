@@ -1,0 +1,33 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+RelatedContent htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<!-- Adds related content parameters to the check in new form if we are linking a new item. -->
+<@dynamichtml related_content_checkin_parameters@>
+	<$if isRelatedContent and isTrue(isRelatedContent)$>
+		<input type=hidden name=isRelatedContent value="1">
+		<input type=hidden name=dLinkTypeID value="<$dLinkTypeID$>">
+		<input type=hidden name=dLinkClassID value="<$if dLinkClassID$><$dLinkClassID$><$endif$>">
+		<input type=hidden name=originalSource value="<$if originalSource$><$originalSource$><$endif$>">
+		<input type=hidden name=originalID value="<$originalID$>">
+		<input type=hidden name=originalName value="<$originalName$>">
+	<$endif$>
+<@end@>
+
+<@dynamichtml std_checkin_form_end@>
+	<$include related_content_checkin_parameters$>
+	<$include super.std_checkin_form_end$>
+<@end@>
+
+<@dynamichtml erm_checkin_form_start@>
+	<$include super.erm_checkin_form_start$>
+	<$include related_content_checkin_parameters$>
+<@end@>
+
+</body>
+</html>

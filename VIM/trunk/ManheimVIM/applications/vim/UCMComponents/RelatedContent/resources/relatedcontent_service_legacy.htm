@@ -1,0 +1,41 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+RelatedContent service
+</title>
+</head>
+<body>
+
+<@table RelatedContent_Services_Legacy@>
+<table border=1><caption><strong>Scripts For Custom Services</strong></caption>
+<tr>
+	<td>Name</td>
+	<td>Attributes</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>GET_RMA_LINK_TYPES</td>
+	<td>Service
+		0
+		null
+		null
+		null<br>
+		null</td>
+	<td>3:prepareRedirect:IdcService=GET_RELATED_TYPES::null</td>
+</tr>
+<tr>
+	<td>GET_RMA_CONTENT_LINKS</td>
+	<td>Service
+		0
+		null
+		null
+		null<br>
+		null</td>
+	<td>3:prepareRedirect:IdcService=GET_RELATED_CONTENT&dLinkTypeID=<$dLinkTypeID$>&dID=<$dID$>&isGetParents=1::null</td>
+</tr>
+</table>
+<@end@>
+
+</body>
+</html>

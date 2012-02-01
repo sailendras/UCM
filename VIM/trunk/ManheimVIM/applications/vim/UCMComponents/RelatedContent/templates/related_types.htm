@@ -1,0 +1,219 @@
+<$include std_doctype_html_decl$>
+
+<head>
+	<$defaultPageTitle=lc("wwRelatedTypes")$>
+	<$include std_html_head_declarations$>
+
+	<script language="JavaScript">
+		function deleteRelatedType(typeID, typeName, frm)
+		{
+			var configMsg;
+			configMsg = "<$lc("wwRelatedTypeDeleteConfirm")$>" + " (" + typeName + ")";
+
+			if (confirm(configMsg))
+			{
+				frm["dLinkTypeID"].value = typeID;
+				frm.submit();
+			}
+		}
+
+		<$include do_option_action_script$>
+	</script>
+</head>
+
+<$include body_def$>
+
+<$include std_page_begin$>
+
+<$include std_header$>
+
+<!-- Add menu resources -->
+<$headerMenuId = "HEADER_MENU"$>
+
+<$exec rsCreateResultSet("PageMenusData", "nodeId,parentId,label,type,href,loadOrder")$>
+<$exec rsMakeFromString("PageMenusIds", "HEADER_MENU")$>
+
+<$exec rsAppendNewRow("PageMenusData")$>
+<$PageMenusData.nodeId = "ADD_RELATED_TYPE"$>
+<$PageMenusData.parentId = "HEADER_MENU"$>
+<$PageMenusData.label = "wwRelatedTypeAdd"$>
+<$PageMenusData.type = "item"$>
+<$PageMenusData.loadOrder = 10$>
+<$PageMenusData.href = HttpCgiPath & "?IdcService=ADD_RELATED_TYPE_FORM"$>
+
+<$include page_menus_js_object_setup$>
+<$include std_page_heading$>
+
+<br style="line-height:15px">
+
+<$infoTableId=1, columnCount=0, rowCount=0$>
+<table class="xuiListTable" style="width:100%" border="0" cellpadding="0" cellspacing="0">
+<tr class="xuiAltHeader">
+
+	<!-- LINK TYPE NAME Column Header -->
+	<$columnCount = columnCount + 1$>
+	<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:15em;vertical-align:middle">
+		<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+			<$lc("wwLabelName")$>
+		</div>
+	</td>
+
+	<!-- LINK TYPE DESTINATION NAME Column Header -->
+	<$columnCount = columnCount + 1$>
+	<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+	<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:18em;vertical-align:middle">
+		<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+			<$lc("wwRelatedTypeDestination")$>
+		</div>
+	</td>
+
+	<!-- LINK TYPE CLASS Column Header -->
+	<$columnCount = columnCount + 1$>
+	<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+	<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:10em;vertical-align:middle">
+		<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+			<$lc("wwRelatedTypeClass")$>
+		</div>
+	</td>
+
+	<!-- LINK BY NAME Column Header -->
+	<$columnCount = columnCount + 1$>
+	<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+	<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:10em;vertical-align:middle">
+		<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+			<$lc("wwRelatedTypeLinkByName2")$>
+		</div>
+	</td>
+
+	<!-- LINK TYPE SYSTEM Column Header -->
+	<$columnCount = columnCount + 1$>
+	<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+	<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:5em;vertical-align:middle">
+		<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+			<$lc("wwRelatedTypeSystem")$>
+		</div>
+	</td>
+
+	<!-- LINK TYPE ACTION Column Header -->
+	<$columnCount = columnCount + 1$>
+	<td class="xuiListResizeDragCell_Header" <$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$columnCount - 1$>', 'column_<$infoTableId$>_<$columnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>></td>
+	<td id="column_<$infoTableId$>_<$columnCount$>" class="xuiListHeaderCell"  style="width:7em;vertical-align:middle">
+		<div style="white-space:nowrap;overflow:hidden;text-align:center" nowrap>
+			<$lc("wwActions")$>
+		</div>
+	</td>
+</tr>
+
+<!-- Phantom row columns provide drag-enabled cells between data cells -->
+<tr>
+	<$phantomColumnCount=2$>
+	<td style="font-size:1px">&nbsp;</td>
+
+	<$loopwhile phantomColumnCount <= columnCount$>
+		<td rowspan="1000" class="xuiListResizeDragCell_Item" style="font-size:1px"
+			<$if useLayoutManager$>onmousedown="resizeColumns_horizontal('column_<$infoTableId$>_<$phantomColumnCount - 1$>', 'column_<$infoTableId$>_<$phantomColumnCount$>', event)" onmouseover="this.style.cursor='e-resize'" onmouseout="this.style.cursor='default'"<$endif$>>&nbsp;</td>
+		<td style="font-size:1px">&nbsp;</td>
+		<$phantomColumnCount=phantomColumnCount+1$>
+	<$endloop$>
+</tr>
+
+<$loop RelatedTypes$>
+
+<$if rowCount%2 == 0$>
+	<$rowClass="xuiListContentCell_Odd"$>
+<$else$>
+	<$rowClass="xuiListContentCell_Even"$>
+<$endif$>
+
+<tr class="<$rowClass$>">
+
+	<!-- LINK TYPE NAME cell -->
+	<td class="<$rowClass$>" style="vertical-align:middle">
+		<div class="xuiDisplayText" style="overflow:hidden;text-align:left;white-space:nowrap" nowrap>
+			<b><$dLinkTypeName$><b>&nbsp;
+		</div>
+	</td>
+
+	<!-- LINK TYPE DESTINATION NAME cell -->
+	<td class="<$rowClass$>" style="vertical-align:middle">
+		<div class="xuiDisplayText" style="overflow:hidden;text-align:left;white-space:nowrap" nowrap>
+			&nbsp;<$dLinkTypeDestName$>&nbsp;
+		</div>
+	</td>
+
+	<!-- LINK TYPE CLASS NAME cell -->
+	<td class="<$rowClass$>" style="vertical-align:middle">
+		<div class="xuiDisplayText" style="overflow:hidden;text-align:left;white-space:nowrap" nowrap>
+			&nbsp;<$dLinkClassName$>&nbsp;
+		</div>
+	</td>
+
+	<!-- LINK BY NAME cell -->
+	<td class="<$rowClass$>" style="vertical-align:middle">
+		<div class="xuiDisplayText" style="overflow:hidden;text-align:center;white-space:nowrap" nowrap>
+			<$if isTrue(dIsLinkByName)$>
+				<$lc("wwYes")$>
+			<$else$>
+				<$lc("wwNo")$>
+			<$endif$>
+		</div>
+	</td>
+
+	<!-- LINK TYPE SYSTEM cell -->
+	<td class="<$rowClass$>" style="vertical-align:middle">
+		<div class="xuiDisplayText" style="overflow:hidden;text-align:center;white-space:nowrap" nowrap>
+			<$if isTrue(dIsSystemLink)$>
+				<$lc("wwYes")$>
+			<$else$>
+				<$lc("wwNo")$>
+			<$endif$>
+		</div>
+	</td>
+
+	<!-- LINK TYPE ACTION cell -->
+	<td class="<$rowClass$>" style="vertical-align:middle">
+		<div class="xuiDisplayText" style="height:1.5em;overflow:hidden;text-align:center;white-space:nowrap" nowrap>
+			<a href="javascript:showPopup('popup_<$dLinkTypeID$>', 'actIcon_<$dLinkTypeID$>', null)"><img id="actIcon_<$dLinkTypeID$>" alt="<$lc("wwActions")$>" src="<$lm_action_image$>"
+				height="16" width="16" border="0");"></a>
+		</div>
+
+		<div class="xuiPopupContainer" id="popup_<$dLinkTypeID$>" style="display:none;white-space:nowrap;z-index:99" nowrap>
+			<table class="xuiPopupTable">
+			<tr>
+				<td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+					onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+					<a class="menuA_ChildLinkText" href="<$HttpCgiPath$>?IdcService=EDIT_RELATED_TYPE_FORM&dLinkTypeID=<$dLinkTypeID$>"
+						target="_self"><$lc("wwEdit")$></a>
+				</td>
+			</tr>
+
+			<$if isFalse(dIsSystemLink)$>
+				<tr>
+					<td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+						onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+						<a class="menuA_ChildLinkText" href="javascript:deleteRelatedType('<$dLinkTypeID$>', '<$dLinkTypeName$>', document.DeleteTypeFrm)"
+							target="_self"><$lc("wwDelete")$></a>
+					</td>
+				</tr>
+			<$endif$>
+			</table>
+		</div>
+	</td>
+
+</tr>
+
+<$rowCount=rowCount+1$>
+
+<$endloop$>
+
+</table>
+
+<form name="DeleteTypeFrm" action="<$HttpCgiPath$>" method="GET">
+	<input type=hidden name="IdcService" value="DELETE_RELATED_TYPE">
+	<input type=hidden name="dLinkTypeID" value="">
+</form>
+
+<$include std_page_end$>
+
+</body>
+</html>

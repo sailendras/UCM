@@ -1,0 +1,167 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+RelatedContent staticResTable
+</title>
+</head>
+<body>
+
+<!-- The RelatedExternalServiceHandler must have a low searchOrder in order -->
+<!-- to add filter hooks to ExternalHelper services. -->
+
+<@table RelatedContent_ServiceHandlers@>
+<table border=1><caption><strong>
+<tr>
+	<td>serviceName</td>
+	<td>handler</td>
+	<td>searchOrder</td>
+</tr>
+<tr>
+	<td>Service</td>
+	<td>relatedcontent.RelatedServiceHandler</td>
+	<td>10</td>
+</tr>
+<tr>
+	<td>Service</td>
+	<td>relatedcontent.RelatedExternalServiceHandler</td>
+	<td>-100</td>
+</tr>
+</table>
+<@end@>
+
+<@table RelatedContent_IdocScriptExtensions@>
+<table border=1><caption><strong>
+<tr>
+	<td>name</td>
+	<td>class</td>
+	<td>loadOrder</td>
+</tr>
+<tr>
+	<td>RelatedContentScriptExtensions</td>
+	<td>relatedcontent.RelatedScriptExtensions</td>
+	<td>10</td>
+</tr>
+</table>
+<@end@>
+
+<@table RelatedContent_ColumnTranslation@>
+<table border=1><caption><strong>
+<tr>
+	<td>column</td>
+	<td>alias</td>
+</tr>
+<tr>
+	<td>DLINKTYPEID</td>
+	<td>dLinkTypeID</td>
+</tr>
+<tr>
+	<td>DLINKCLASSID</td>
+	<td>dLinkClassID</td>
+</tr>
+<tr>
+	<td>DLINKTYPENAME</td>
+	<td>dLinkTypeName</td>
+</tr>
+<tr>
+	<td>DLINKTYPEDESTNAME</td>
+	<td>dLinkTypeDestName</td>
+</tr>
+<tr>
+	<td>DISLINKBYNAME</td>
+	<td>dIsLinkByName</td>
+</tr>
+<tr>
+	<td>DISSYSTEMLINK</td>
+	<td>dIsSystemLink</td>
+</tr>
+<tr>
+	<td>DLINKKEY</td>
+	<td>dLinkKey</td>
+</tr>
+<tr>
+	<td>DSOURCE</td>
+	<td>dSource</td>
+</tr>
+<tr>
+	<td>DORDERID</td>
+	<td>dOrderID</td>
+</tr>
+<tr>
+	<td>DISPARENT</td>
+	<td>dIsParent</td>
+</tr>
+<tr>
+	<td>DPARENTSOURCE</td>
+	<td>dParentSource</td>
+</tr>
+<tr>
+	<td>DPARENTID</td>
+	<td>dParentID</td>
+</tr>
+<tr>
+	<td>DPARENTNAME</td>
+	<td>dParentName</td>
+</tr>
+<tr>
+	<td>DISMARKEDDELETE</td>
+	<td>dIsMarkedDelete</td>
+</tr>
+<tr>
+	<td>DNUMBERLINKED</td>
+	<td>dNumberLinked</td>
+</tr>
+<tr>
+	<td>DLASTMODIFIEDDATE</td>
+	<td>dLastModifiedDate</td>
+</tr>
+</table>
+<@end@>
+
+<@table RelatedSystemTypes@>
+<table border=1><caption><strong>RelatedSystemTypes</strong></caption>
+<tr>
+	<td>dLinkTypeID</td>
+	<td>dLinkClassID</td>
+	<td>dLinkTypeName</td>
+	<td>dLinkTypeDestName</td>
+	<td>dIsLinkByName</td>
+	<td>dIsSystemLink</td>
+</tr>
+<tr>
+	<td>1</td>
+	<td>PP</td>
+	<td>Renditions</td>
+	<td></td>
+	<td>1</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>2</td>
+	<td>CL</td>
+	<td>Supersedes</td>
+	<td></td>
+	<td>1</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>3</td>
+	<td>PC</td>
+	<td>Supporting Content</td>
+	<td>Supported Content By</td>
+	<td>1</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>4</td>
+	<td>CR</td>
+	<td>Cross-References</td>
+	<td>Cross-Referenced By</td>
+	<td>1</td>
+	<td>1</td>
+</tr>
+</table>
+<@end@>
+
+</body>
+</html>

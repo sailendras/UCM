@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-type" content="application/xhtml+xml;charset=UTF-8" />
+
+<style type="text/css">
+  /* <![CDATA[ */
+	body { font-family: sans-serif;	}
+	*.error { font-family: monospace; margin-left: 1em; }
+	*.table-header { font-weight: bold }
+  /* ]]> */
+</style>
+
+<title>RelatedContent Component for 10g Content Server</title>
+</head>
+
+<body>
+<h1>RelatedContent Component for 10g Content Server</h1>
+<table border="0">
+	<tr>
+		<td class="table-header">Date:</td>
+		<td>March 23, 2009</td>
+	</tr>
+	<tr>
+		<td class="table-header">Component Version:</td>
+		<td>10g 2009_03_23 (build 16)</td>
+	</tr>
+	<tr>
+		<td class="table-header">Product and Version:</td>
+		<td>Oracle Content Server 10.1.3.3.1 + updates<br />
+			Oracle Content Server 10.1.3.3.2 + updates<br />
+		</td>
+	</tr>
+</table>
+
+<h3>Component Information:</h3>
+<p>This component allows you to link content items together to form different relations.</p>
+<p>For more information see the file <b>related_content_80.pdf</b> contained in the root directory of the
+component.</p>
+<p>This is an upgrade of the RmaLinks component.</p>
+
+<h3>Installation Instructions:</h3>
+<p>Warning: This update involves installing a new version of a component.
+Oracle recommends you perform all necessary backups prior to applying this
+update. For additional information see the <em>Content Server Getting Started
+Guide</em> which contains information on System Maintenance and Backup
+Strategies.</p>
+
+<ol>
+	<li>Download the component file.</li>
+	<li>The file is an Oracle UCM component. Use the Component Wizard or the Admin Server
+	Component Manager to install and enable the component.</li>
+	<li>Restart the Content Server.</li>
+</ol>
+
+<h3>Release History:</h3>
+<ul>
+	<li>2007_01_24 (build  1) - Initial revision of the component for 10g</li>
+	<li>2007_02_15 (build  2) - Fixed issue with filter being called twice.</li>
+	<li>2007_02_22 (build  3) - Fixed issue with component not compatible with Java 1.4.</li>
+	<li>2007_03_08 (build  4) - Fixed issue with menus.</li>
+	<li>2007_03_21 (build  5) - Fixed menu for adding links to external items to not show if page is isFreezeState</li>
+	<li>2007_04_04 (build  6) - Extended dDocName and dParentName fields in RelatedContent table to 100 characters</li>
+	<li>2007_04_06 (build  7) - Fixed database issue with upgrading the tables</li>
+	<li>2007_08_19 (build  8) - Removed the library path, Fixed issue with Japanese encoding</li>
+	<li>2007_08_27 (build  9) - Added the ability to import Related Content archives from other Content Servers</li>
+	<li>2007_08_31 (build 10) - Following issues:
+		<ul>
+			<li>Bug 6363933 - Resolved problem with not being able to unlink items after new revisions of the linked items have been checked in.</li>
+		</ul>
+	</li>
+	<li>2007_09_24 (build 11) - Localized the caption for DocMeta field for Releated Content.</li>
+	<li>2008_01_17 (build 12) - Following issues:
+		<ul>
+			<li>Bug 6397251 - Added the field dLastModifiedDate to allow partial import/export of related content instead of the entire table.</li>
+		</ul>
+	</li>
+	<li>2008_04_16 (build 13) - Following issues:
+		<ul>
+			<li>Bug 6874929  - Fixed sorting of the list of superseded records.</li>
+			<li>Added support for core accessibility changes and RTL lanuages like Arabic.</li>
+		</ul>
+	</li>
+	<li>2009_01_22 (build 14) - Added the ability to archive deleted related content.</li>	
+	<li>2009_03_03 (build 15) - Fixed issues with import/export of related content.</li>	
+	<li>2009_03_23 (build 16) - Fixed issues with import/export of related content with content items having multiple revisions.</li>	
+	<li>2009_04_13 (build 17) - Fixed issues with content delete problem in informix database.</li>
+</ul>
+
+</body>
+</html>

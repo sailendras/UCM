@@ -1,0 +1,115 @@
+<$include std_doctype_html_decl$>
+
+<head>
+	<$defaultPageTitle=lc("wwRelatedTypeAdd")$>
+	<$include std_html_head_declarations$>
+
+	<script>
+		function enableDisableDestField(frm)
+		{
+			var classID;
+
+			classID = frm.dLinkClassID.value;
+			if ((classID == 'PC') || (classID == 'CR'))
+			{
+				frm.dLinkTypeDestName.readOnly = 0;
+			}
+			else
+			{
+				frm.dLinkTypeDestName.value = "";
+				frm.dLinkTypeDestName.readOnly = 1;
+			}
+		}
+
+		function setLinkByNameFlag(frm)
+		{
+			if (frm.linkByName_checkbox.checked)
+			{
+				frm.dIsLinkByName.value = "1";
+			}
+			else
+			{
+				frm.dIsLinkByName.value = "0";
+			}
+		}
+	</script>
+</head>
+
+<$if IsRelatedContentLinkByName and isTrue(IsRelatedContentLinkByName)$>
+	<$isLinkByName=1$>
+<$endif$>
+
+<$include body_def$>
+
+<$include std_page_begin$>
+
+<$include std_header$>
+
+<table border=0 cellpadding=2 cellspacing=0>
+<caption align=top><h4 class=pageTitle><$lc("wwRelatedTypeAdd")$></h4></caption>
+<tr>
+	<td colspan=2>
+		<a class='xuiBreadcrumb_link' href='<$HttpCgiPath$>?IdcService=GET_RELATED_TYPES'><$lc("wwRelatedTypes")$></a>
+	  	-->
+		<span class='xuiBreadcrumb_link'><$lc("wwRelatedTypeAdd")$></span>
+	</td>
+</tr>
+<tr>
+	<td>&nbsp;<br></td>
+</tr>
+
+<form name="AddRelatedTypeForm" method="GET" action="<$HttpCgiPath$>">
+<input type=hidden name=IdcService value="ADD_RELATED_TYPE">
+
+<tr>
+	<td colspan=2><hr></td>
+</tr>
+
+<tr>
+	<td width=30%><span class=requiredField><$lc("wwLabelName")$></span></td>
+	<td width=70%><input type=text size=50 name=dLinkTypeName value="" maxlength=50></td>
+</tr>
+
+<tr>
+	<td width=30%><span class=tableEntry><$lc("wwRelatedTypeDestination")$></span></td>
+	<td width=70%><input type=text size=50 name=dLinkTypeDestName value="" maxlength=50 readOnly=1></td>
+</tr>
+
+<tr>
+	<td width=30%><span class=requiredField><$lc("wwRelatedTypeClass")$></span></td>
+	<td width=70%>
+		<select name=dLinkClassID onChange="enableDisableDestField(document.AddRelatedTypeForm)">
+			<$loop RelatedTypeClasses$>
+				<option value="<$dLinkClassID$>"><$dLinkClassName$></option>
+			<$endloop$>
+		</select>
+	</td>
+</tr>
+
+<tr>
+	<td width=30%>&nbsp;</td>
+	<td width=70%>
+		<input type=hidden name=dIsLinkByName value="<$if isLinkByName$>1<$else$>0<$endif$>">
+		<input type=checkbox name=linkByName_checkbox <$if isLinkByName$> checked<$endif$>
+			onClick="setLinkByNameFlag(document.AddRelatedTypeForm)">
+		<span class=tableEntry><$lc("wwRelatedTypeLinkByName")$></span>
+	</td>
+</tr>
+
+<tr>
+	<td colspan=2><hr></td>
+</tr>
+
+<tr align=center>
+	<td colspan=2 width=100%><input type=submit name=Submit value="<$lc("wwAdd")$>">
+	<input type=button name=Reset value="<$lc("wwReset")$>" onClick="dLinkTypeDestName.readOnly=1;reset()">
+</tr>
+
+</form>
+
+</table>
+
+<$include std_page_end$>
+
+</body>
+</html>

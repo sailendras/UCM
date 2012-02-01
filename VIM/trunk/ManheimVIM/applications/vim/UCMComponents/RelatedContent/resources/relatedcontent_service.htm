@@ -1,0 +1,188 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+RelatedContent service
+</title>
+</head>
+<body>
+
+<@table RelatedContent_Services@>
+<table border=1><caption><strong>Scripts For Custom Services</strong></caption>
+<tr>
+	<td>Name</td>
+	<td>Attributes</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>GET_RELATED_TYPES</td>
+	<td>Service
+		0
+		RELATED_TYPES
+		null
+		null<br>
+		!csUnableToGetRelatedTypes</td>
+	<td>3:hasRelatedContentRights:admin.configurelinks::null
+		3:getRelatedTypes:RelatedTypes::null</td>
+</tr>
+<tr>
+	<td>ADD_RELATED_TYPE_FORM</td>
+	<td>Service
+		0
+		ADD_RELATED_TYPE
+		null
+		null<br>
+		!csUnableToAddRelatedType</td>
+	<td>3:hasRelatedContentRights:admin.configurelinks::null
+		3:getRelatedTypeClasses:RelatedTypeClasses::null</td>
+</tr>
+<tr>
+	<td>ADD_RELATED_TYPE</td>
+	<td>Service
+		0
+		null
+		null
+		null<br>
+		!csUnableToAddRelatedType</td>
+	<td>3:hasRelatedContentRights:admin.configurelinks::null
+		3:addRelatedType::beginTran:null
+		3:auditRelatedContentSuccess:dLinkTypeID,dLinkTypeName,wwRmaLinkType,wwCreate,wwCreate:commitTran:!csErrorWritingAudit
+		3:prepareRedirect:IdcService=GET_RELATED_TYPES::null</td>
+</tr>
+<tr>
+	<td>EDIT_RELATED_TYPE_FORM</td>
+	<td>Service
+		0
+		EDIT_RELATED_TYPE
+		null
+		null<br>
+		!csUnableToEditRelatedType</td>
+	<td>3:hasRelatedContentRights:admin.configurelinks::null
+		3:getRelatedTypeInfo:RelatedTypeInfo::null</td>
+</tr>
+<tr>
+	<td>EDIT_RELATED_TYPE</td>
+	<td>Service
+		0
+		null
+		null
+		null<br>
+		!csUnableToEditRelatedType</td>
+	<td>3:hasRelatedContentRights:admin.configurelinks::null
+		3:editRelatedType::beginTran:null
+		3:setEditRelatedTypeAuditDetails:::null
+		3:auditRelatedContentSuccess:dLinkTypeID,dLinkTypeName,wwRmaLinkType,wwEdit,wwEdit:commitTran:!csErrorWritingAudit
+		3:prepareRedirect:IdcService=GET_RELATED_TYPES::null</td>
+</tr>
+<tr>
+	<td>DELETE_RELATED_TYPE</td>
+	<td>Service
+		0
+		null
+		null
+		null<br>
+		!csUnableToDeleteRelatedType</td>
+	<td>3:hasRelatedContentRights:admin.configurelinks::null
+		3:deleteRelatedType::beginTran:null
+		3:auditRelatedContentSuccess:dLinkTypeID,dLinkTypeName,wwRmaLinkType,wwDelete,wwDelete:commitTran:!csErrorWritingAudit
+		3:prepareRedirect:IdcService=GET_RELATED_TYPES::null</td>
+</tr>
+<tr>
+	<td>GET_RELATED_CONTENT</td>
+	<td>Service
+		49
+		RELATED_CONTENT
+		null
+		null<br>
+		!csUnableToGetRelatedContent</td>
+	<td>3:getRelatedTypeInfo:RelatedTypeInfo,isCheckName::null
+		3:getRelatedContentDocInfo:DOC_INFO::null
+		3:getRelatedContent:RelatedContent,RelatedTypeInfo,DOC_INFO::null
+		3:loadSharedTable:ExternalSource,ExternalSource::null</td>
+</tr>
+<tr>
+	<td>ADD_RELATED_CONTENT</td>
+	<td>Service
+		18
+		null
+		null
+		null<br>
+		null</td>
+	<td>3:doSubService:ADD_RELATED_CONTENT_SUB:beginTran,commitTran:null
+		3:prepareRedirect:IdcService=GET_RELATED_CONTENT&dLinkTypeID=<$dLinkTypeID$>&dSource=<$dSource$>&dID=<$dID$>::null</td>
+</tr>
+<tr>
+	<td>ADD_RELATED_CONTENT_SUB</td>
+	<td>Service
+		0
+		null
+		SubService
+		null<br>
+		null</td>
+	<td>3:hasRelatedContentRights:record.createlink::null
+		3:setConditionVars:RmaAllowEditAfterCuttoff,RmaAllowEditIfClosed,DoNotCheckRecordEditRight::null
+		3:cacheRelatedNewItemInfo:::null
+		3:getRelatedTypeInfo:RelatedTypeInfo,isCheckName::null
+		3:getRelatedContentDocInfo:DOC_INFO,2::null
+		3:getAddDeleteRelatedContentDocInfo:AddDocInfo::null
+		3:addRelatedContent:RelatedTypeInfo,DOC_INFO,AddDocInfo::null
+		3:auditRelatedContentSuccess:originalName,originalTitle,wwRmaLinks,wwCreate,wwCreate,::!csErrorWritingAudit
+		3:resetRelatedNewItemInfo:::null</td>
+</tr>
+<tr>
+	<td>DELETE_RELATED_CONTENT</td>
+	<td>Service
+		18
+		null
+		null
+		null<br>
+		!csUnableToDeleteRelatedContent</td>
+	<td>3:doSubService:DELETE_RELATED_CONTENT_SUB:beginTran,commitTran:null
+		3:prepareRedirect:IdcService=GET_RELATED_CONTENT&dLinkTypeID=<$dLinkTypeID$>&dSource=<$dSource$><$if dID$>&dID=<$dID$><$else$>&dDocName=<$dDocName$><$endif$>::null</td>
+</tr>
+<tr>
+	<td>DELETE_RELATED_CONTENT_SUB</td>
+	<td>Service
+		0
+		null
+		SubService
+		null<br>
+		null</td>
+	<td>3:hasRelatedContentRights:record.unlink::null
+		3:setConditionVars:RmaAllowEditAfterCuttoff,RmaAllowEditIfClosed,DoNotCheckRecordEditRight::null
+		3:getRelatedTypeInfo:RelatedTypeInfo,isCheckName::null
+		3:getRelatedContentDocInfo:DOC_INFO,2::null
+		3:getAddDeleteRelatedContentDocInfo:DeleteDocInfo,isDelete::null
+		3:deleteRelatedContent:RelatedTypeInfo,DOC_INFO,DeleteDocInfo::null
+		3:auditRelatedContentSuccess:originalName,originalTitle,wwRmaLinks,wwDelete,wwDelete::!csErrorWritingAudit</td>
+</tr>
+
+<tr>
+	<td>CHECKIN_SUPERSEDING_CONTENT_SUB</td>
+	<td>Service
+		0
+		null
+		SubService
+		null<br>
+		null</td>
+	<td>3:setSupersedingContentID:::null
+		3:setSupersedingFileValues:::null
+		3:setSupersedingInheritedValues:::null
+		3:doSubService:CHECKIN_NEW_SUB::null
+		3:setSupersedingRelatedContent:::null</td>
+</tr>
+<tr>
+	<td>CREATE_SUPERSEDING_EXTERNAL_CONTENT_SUB</td>
+	<td>Service
+		0
+		null
+		SubService
+		null<br>
+		null</td>
+	<td></td>
+</tr>
+</table>
+<@end@>
+
+</body>
+</html>

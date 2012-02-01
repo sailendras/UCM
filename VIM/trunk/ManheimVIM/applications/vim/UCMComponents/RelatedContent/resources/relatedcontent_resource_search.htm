@@ -1,0 +1,439 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+RelatedContent htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<!-- Add the related content URL links for each related type in the search results. -->
+<@dynamichtml extra_setup_search_results_action_popups@>
+	<$include super.extra_setup_search_results_action_popups$>
+
+	<$loadRelatedTypes()$>
+	<$loop RelatedTypes$>
+		<$curLinkTypeID=getValue("RelatedTypes", "dLinkTypeID")$>
+
+		<$exec rsAppendNewRow("PopupProps")$>
+		<$exec setValue("PopupProps", "label", lc("wwRelatedContentAddLink") & " (" & dLinkTypeName & ")")$>
+		<$exec setValue("PopupProps", "function", "<$SearchHttpCgiPath$>?IdcService=GET_RELATED_CONTENT&dLinkTypeID=" & curLinkTypeID & "&dID=<$dID$>")$>
+		<$exec setValue("PopupProps", "ifClause", "not isExternallyManagedDoc")$>
+		<$exec setValue("PopupProps", "linkTarget", "<$docLinkTarget$>")$>
+		<$exec setValue("PopupProps", "class", "document")$>
+		<$exec setValue("PopupProps", "id", "checkout")$>
+	<$endloop$>
+<@end@>
+
+<!-- Add the related content URL links for the link existing item search results page. -->
+<@dynamichtml setup_search_results_action_popups@>
+	<$if isRelatedContent and isTrue(isRelatedContent)$>
+		<$doingPopupActions = 1$>
+		<$exec rsCreateResultSet("PopupProps", "label,onClick,function,class,id,ifClause,linkTarget")$>
+
+		<$exec rsAppendNewRow("PopupProps")$>
+		<$exec setValue("PopupProps", "label", lc("wwDocInfoTitle"))$>
+		<$if (not dSource) or strEquals(dSource, "CS")$>
+			<$exec setValue("PopupProps", "function", "<$SearchHttpCgiPath$>?IdcService=DOC_INFO&dID=<$dID$>")$>
+		<$else$>
+			<$exec setValue("PopupProps", "function", "<$SearchHttpCgiPath$>?IdcService=INFO_EXTERNAL_ITEM_FORM&dSource=<$dSource$>&dID=<$dID$>")$>
+		<$endif$>
+		<$exec setValue("PopupProps", "ifClause", "not isExternallyManagedDoc")$>
+		<$exec setValue("PopupProps", "linkTarget", "<$docLinkTarget$>")$>
+		<$exec setValue("PopupProps", "class", "document")$>
+		<$exec setValue("PopupProps", "id", "docInfo")$>
+
+		<$exec rsAppendNewRow("PopupProps")$>
+		<$exec setValue("PopupProps", "label", lc("wwRelatedContentLink"))$>
+		<$exec setValue("PopupProps", "function", "<$SearchHttpCgiPath$>?IdcService=ADD_RELATED_CONTENT&dLinkTypeID=<$dLinkTypeID$>&dSource=<$originalSource$>&dID=<$originalID$>&addLinkID=<$if dSource$><$dSource$>:<$endif$><$dID$>")$>
+		<$exec setValue("PopupProps", "linkTarget", "<$docLinkTarget$>")$>
+		<$exec setValue("PopupProps", "class", "document")$>
+		<$exec setValue("PopupProps", "id", "link")$>
+
+		<$if isCrossReferences$>
+			<$exec rsAppendNewRow("PopupProps")$>
+			<$exec setValue("PopupProps", "label", lc("wwRelatedContentLinkReciprocal"))$>
+			<$exec setValue("PopupProps", "function", "<$SearchHttpCgiPath$>?IdcService=ADD_RELATED_CONTENT&dLinkTypeID=<$dLinkTypeID$>&dSource=<$originalSource$>&dID=<$originalID$>&addLinkID=<$if dSource$>$dSource$>:<$endif$><$dID$>&isReciprocal=1")$>
+			<$exec setValue("PopupProps", "linkTarget", "<$docLinkTarget$>")$>
+			<$exec setValue("PopupProps", "class", "document")$>
+			<$exec setValue("PopupProps", "id", "link")$>
+		<$endif$>
+	<$else$>
+		<$include super.setup_search_results_action_popups$>
+	<$endif$>
+<@end@>
+
+<@dynamichtml erm_setup_search_results_action_popups_menu_setup@>
+	<$if isRelatedContent and isTrue(isRelatedContent)$>
+		<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId = "LINKS"$>
+		<$PageMenusData.parentId = "HEADER_MENU"$>
+		<$PageMenusData.label = "wwRelatedContentLink"$>
+		<$PageMenusData.type = "collection"$>
+		<$PageMenusData.loadOrder = 50$>
+
+		<$if not isExternallyManagedDoc$>
+			<$exec rsAppendNewRow("PageMenusData")$>
+			<$PageMenusData.nodeId="INFO_CONTENT_"&dSource$>
+			<$PageMenusData.parentId="LINKS"$>
+			<$PageMenusData.label=lc("wwDocInfoTitle")$>
+			<$PageMenusData.type="item"$>
+			<$PageMenusData.loadOrder=50$>
+			<$if (not dSource) or strEquals(dSource, "CS")$>
+				<$PageMenusData.href=SearchHttpCgiPath&"?IdcService=DOC_INFO&dID="&dID$>
+			<$else$>
+				<$PageMenusData.href=SearchHttpCgiPath&"?IdcService=INFO_EXTERNAL_ITEM_FORM&dSource="&dSource&"&dID="&dID$>
+			<$endif$>
+		<$endif$>
+
+		<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId="ADD_LINK_"&dSource$>
+		<$PageMenusData.parentId="LINKS"$>
+		<$PageMenusData.label=lc("wwRelatedContentLink")$>
+		<$PageMenusData.type="item"$>
+		<$PageMenusData.loadOrder=50$>
+		<$PageMenusData.href=SearchHttpCgiPath&"?IdcService=ADD_RELATED_CONTENT&dLinkTypeID="&dLinkTypeID&"&dSource="&originalSource&"&dID="&originalID&"&addLinkID="&dSource&":"&dID$>
+
+		<$if isCrossReferences$>
+			<$exec rsAppendNewRow("PageMenusData")$>
+			<$PageMenusData.nodeId="ADD_LINK_RECIPROCAL_"&dSource$>
+			<$PageMenusData.parentId="LINKS"$>
+			<$PageMenusData.label=lc("wwRelatedContentLinkReciprocal")$>
+			<$PageMenusData.type="item"$>
+			<$PageMenusData.loadOrder=50$>
+			<$PageMenusData.href=SearchHttpCgiPath&"?IdcService=ADD_RELATED_CONTENT&dLinkTypeID="&dLinkTypeID&"&dSource="&originalSource&"&dID="&originalID&"&addLinkID="&dSource&":"&dID&"&isReciprocal=1"$>
+		<$endif$>
+	<$else$>
+		<$include super.erm_setup_search_results_action_popups_menu_setup$>
+	<$endif$>
+<@end@>
+
+<@dynamichtml custom_erm_action_popup_container@>
+<$include super.custom_erm_action_popup_container$>
+<$if isTrue(#env.EnableAccessibilityMode)$>
+	<$if strEqualsIgnoreCase(ermObject, "EXTERNAL_ITEM") and not isFreezeState$>
+		<$exec rsAppendNewRow("PopupProps")$>
+		<$PopupProps.id = "LINKS"$>
+		<$PopupProps.parentId = "HEADER_MENU"$>
+		<$PopupProps.label = "wwRelatedContentLink"$>
+		<$PopupProps.class = "ErmLinks"$>
+		<$PopupProps.loadOrder = 50$>
+
+		<$loadRelatedTypes()$>
+		<$loop RelatedTypes$>
+			<$curLinkTypeID=getValue("RelatedTypes", "dLinkTypeID")$>
+
+			<$exec rsAppendNewRow("PopupProps")$>
+			<$PopupProps.id="ADD_LINK_"&dLinkTypeName&"_"&dSource$>
+			<$PopupProps.parentId="LINKS"$>
+			<$PopupProps.label=lc("wwRelatedContentAddLink") & " (" & dLinkTypeName & ")"$>
+			<$PopupProps.class="ErmLinks"$>
+			<$PopupProps.loadOrder=50$>
+			<$PopupProps.href=SearchHttpCgiPath&"?IdcService=GET_RELATED_CONTENT&dLinkTypeID="& curLinkTypeID & "&dSource=" & dSource & "&dID="&dID$>
+		<$endloop$>
+	<$endif$>
+<$else$>
+	<$if strEqualsIgnoreCase(ermObject, "EXTERNAL_ITEM") and not isFreezeState$>
+		<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId = "LINKS"$>
+		<$PageMenusData.parentId = "HEADER_MENU"$>
+		<$PageMenusData.label = "wwRelatedContentLink"$>
+		<$PageMenusData.type = "collection"$>
+		<$PageMenusData.loadOrder = 50$>
+
+		<$loadRelatedTypes()$>
+		<$loop RelatedTypes$>
+			<$curLinkTypeID=getValue("RelatedTypes", "dLinkTypeID")$>
+
+			<$exec rsAppendNewRow("PageMenusData")$>
+			<$PageMenusData.nodeId="ADD_LINK_"&dLinkTypeName&"_"&dSource$>
+			<$PageMenusData.parentId="LINKS"$>
+			<$PageMenusData.label=lc("wwRelatedContentAddLink") & " (" & dLinkTypeName & ")"$>
+			<$PageMenusData.type="item"$>
+			<$PageMenusData.loadOrder=50$>
+			<$PageMenusData.href=SearchHttpCgiPath&"?IdcService=GET_RELATED_CONTENT&dLinkTypeID="& curLinkTypeID & "&dSource=" & dSource & "&dID="&dID$>
+		<$endloop$>
+	<$endif$>
+<$endif$>
+<@end@>
+
+<!-- KM Can be deprecated NLN Replaced with custom_erm_action_popup_container-->
+<!-- Add the related content URL links for each related type in the external search results. -->
+<@dynamichtml erm_setup_search_results_action_popups_old@>
+	<$include super.erm_setup_search_results_action_popups$>
+
+	<$if strEqualsIgnoreCase(ermObject, "EXTERNAL_ITEM")$>
+		<$loadRelatedTypes()$>
+		<$loop RelatedTypes$>
+			<$curLinkTypeID=getValue("RelatedTypes", "dLinkTypeID")$>
+
+			<$exec rsAppendNewRow("PopupProps")$>
+			<$exec setValue("PopupProps", "label", lc("wwRelatedContentAddLink") & " (" & dLinkTypeName & ")")$>
+			<$exec setValue("PopupProps", "function", "<$SearchHttpCgiPath$>?IdcService=GET_RELATED_CONTENT&dLinkTypeID=" & curLinkTypeID & "&dSource=" & dSource & "&dID=<$dID$>")$>
+			<$exec setValue("PopupProps", "ifClause", "not isExternallyManagedDoc")$>
+			<$exec setValue("PopupProps", "linkTarget", "<$docLinkTarget$>")$>
+			<$exec setValue("PopupProps", "class", "document")$>
+			<$exec setValue("PopupProps", "id", "checkout")$>
+		<$endloop$>
+	<$endif$>
+<@end@>
+
+
+<!-- Adds related content parameters to the query page. -->
+<@dynamichtml custom_query_results_options@>
+	<$include super.custom_query_results_options$>
+	<$include related_content_checkin_parameters$>
+<@end@>
+
+<!-- Adds related content parameters to the external query page. -->
+<@dynamichtml rma_query_results_options_extra_fields@>
+	<$include super.rma_query_results_options_extra_fields$>
+	<$include related_content_checkin_parameters$>
+<@end@>
+
+<!-- Adds related content parameters to the external query page. -->
+<@dynamichtml erm_query_results_options@>
+	<$include related_content_checkin_parameters$>
+	<$include super.erm_query_results_options$>
+<@end@>
+
+
+
+<!-- Sets title of the search results page when adding related content. -->
+<@dynamichtml searchapi_result_title@>
+	<$if isRelatedContent and isTrue(isRelatedContent)$>
+		<$lc("wwRelatedContentSearchResults", originalName)$>
+		<$include related_content_search_result_values$>
+	<$else$>
+		<$include super.searchapi_result_title$>
+	<$endif$>
+<@end@>
+
+<!-- Sets main title of the external search results page when adding related content. -->
+<@dynamichtml erm_checkin_title@>
+	<$if isRelatedContent and isTrue(isRelatedContent) and strEqualsIgnoreCase(ermAction, "BROWSE")$>
+		<$lc("wwRelatedContentSearchResults", originalName)$>
+		<$include related_content_search_result_values$>
+	<$else$>
+		<$include super.erm_checkin_title$>
+	<$endif$>
+<@end@>
+
+<!-- Sets page title of the external search results page when adding related content. -->
+<@dynamichtml rma_std_page_heading@>
+	<$if isRelatedContent and isTrue(isRelatedContent) and ermAction and strEqualsIgnoreCase(ermAction, "BROWSE")$>
+		<$pageTitle=lc("wwRelatedContentSearchResults", originalName)$>
+	<$endif$>
+	<$include super.rma_std_page_heading$>
+<@end@>
+
+<!-- Sets parameters on the search results page. -->
+<@dynamichtml related_content_search_result_values@>
+	<$if strEquals(dLinkClassID, "CL")$>
+		<$isChainedList=1$>
+	<$endif$>
+
+	<$if strEquals(dLinkClassID, "CR")$>
+		<$isCrossReferences=1$>
+	<$endif$>
+
+	<$if not isChainedList$>
+		<$showDocSelect=1$>
+		<$isMultiSelect=1$>
+		<$IsIncludeCheckBoxes=1$>
+	<$endif$>
+<@end@>
+
+<!-- Overide the search result menus when linking existing items -->
+<@dynamichtml searchapi_result_menus_setup@>
+	<$if isRelatedContent and isTrue(isRelatedContent)$>
+		<$include related_content_link_menu_items$>
+		<$include related_content_link_action_menu_items$>
+	<$else$>
+		<$include super.searchapi_result_menus_setup$>
+	<$endif$>
+<@end@>
+
+<!-- Overide the search result menus when linking external existing items -->
+<@dynamichtml erm_searchapi_result_header_menu_setup@>
+	<$if isRelatedContent and isTrue(isRelatedContent) and ermAction and strEqualsIgnoreCase(ermAction, "BROWSE")$>
+		<$include related_content_link_menu_items$>
+	<$else$>
+		<$include super.erm_searchapi_result_header_menu_setup$>
+	<$endif$>
+<@end@>
+
+<@dynamichtml erm_searchapi_result_list_menus_setup@>
+	<$if isRelatedContent and isTrue(isRelatedContent) and ermAction and strEqualsIgnoreCase(ermAction, "BROWSE")$>
+		<$include related_content_link_action_menu_items$>
+	<$else$>
+		<$include super.erm_searchapi_result_list_menus_setup$>
+	<$endif$>
+<@end@>
+
+<!-- Menu items for the linking related content. -->
+<@dynamichtml related_content_link_menu_items@>
+	<$isHeader=1$>
+	<$headerMenuId = "HEADER_MENU"$>
+	<$documentsMenuId = "DOCUMENTS_MENU"$>
+
+	<$isHeader=1$>
+	<$menuId="HEADER_MENU"$>
+	<$headerMenuId=menuId$>
+
+	<$exec rsCreateResultSet("PageMenusData", "nodeId,parentId,label,type,href,loadOrder")$>
+	<$exec rsMakeFromString("PageMenusIds", "HEADER_MENU,DOCUMENTS_MENU")$>
+
+	<$if strEquals(originalSource, "CS")$>
+		<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId = "INFO"$>
+		<$PageMenusData.parentId = "HEADER_MENU"$>
+		<$PageMenusData.label = "wwContentInformation"$>
+		<$PageMenusData.type = "item"$>
+		<$PageMenusData.loadOrder = 10$>
+		<$PageMenusData.href = HttpCgiPath & "?IdcService=DOC_INFO&dID=" & originalID & strTrimWs(inc("related_content_core_content_param"))$>
+	<$else$>
+		<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId = "INFO"$>
+		<$PageMenusData.parentId = "HEADER_MENU"$>
+		<$PageMenusData.label = "wwContentInformation"$>
+		<$PageMenusData.type = "item"$>
+		<$PageMenusData.loadOrder = 10$>
+		<$PageMenusData.href = HttpCgiPath & "?IdcService=INFO_EXTERNAL_ITEM_FORM&dSource=" & originalSource & "&dID=" & originalID & strTrimWs(inc("related_content_core_content_param"))$>
+	<$endif$>
+<@end@>
+
+<@dynamichtml related_content_link_action_menu_items@>
+	<$isHeader=0$>
+	<$menuId="DOCUMENTS_MENU"$>
+
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "LINKS"$>
+	<$PageMenusData.parentId = "DOCUMENTS_MENU"$>
+	<$PageMenusData.label = "wwRelatedContentLink"$>
+	<$PageMenusData.type = "collection"$>
+	<$PageMenusData.loadOrder = 50$>
+
+	<$exec rsAppendNewRow("PageMenusData")$>
+	<$PageMenusData.nodeId = "LINK"$>
+	<$PageMenusData.parentId = "LINKS"$>
+	<$PageMenusData.label = "wwRelatedContentLinkSelected"$>
+	<$PageMenusData.type = "item"$>
+	<$PageMenusData.loadOrder = 50$>
+	<$PageMenusData.href = "javascript:linkContentItems(false)"$>
+
+	<$if isCrossReferences$>
+		<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId = "LINK_RECIPROCAL"$>
+		<$PageMenusData.parentId = "LINKS"$>
+		<$PageMenusData.label = "wwRelatedContentLinkSelectedReciprocal"$>
+		<$PageMenusData.type = "item"$>
+		<$PageMenusData.loadOrder = 50$>
+		<$PageMenusData.href = "javascript:linkContentItems(true)"$>
+	<$endif$>
+<@end@>
+
+<!-- Javascript function to calculate related content to be added. -->
+<@dynamichtml query_form_submit_form_function@>
+	<$include super.query_form_submit_form_function$>
+
+	function linkContentItems(isReciprocal)
+	{
+		var addLinkID = "";
+		var searchSource = "";
+
+		<$tempSource=getValue("#local", "dSource")$>
+		<$if tempSource$>
+			<$searchSource=tempSource$>
+		<$else$>
+			<$searchSource="CS"$>
+		<$endif$>
+		searchSource = "<$searchSource$>";
+
+		var numForms = document.forms.length;
+		for (var i = 0; i < numForms; i++)
+		{
+			var form = document.forms[i];
+
+			<$if strEquals(searchSource, "CS")$>
+				if (form.isSelected == null || form.isSelected.checked == false)
+			<$else$>
+				if (form.select_checkbox == null || form.select_checkbox.checked == false)
+			<$endif$>
+
+			{
+				continue;
+			}
+
+			if (form.dID != null)
+			{
+				if (addLinkID != "")
+				{
+					addLinkID += ",";
+				}
+
+				addLinkID += searchSource + ":" + form.dID.value;
+			}
+		}
+
+		if (addLinkID == "")
+		{
+			alert("<$lc("wwRelatedContentSelectItemToLink")$>");
+			return;
+		}
+
+		if (isReciprocal)
+		{
+			document.AddRelatedFrm.isReciprocal.value = "1";
+		}
+
+		document.AddRelatedFrm.addLinkID.value = addLinkID;
+		document.AddRelatedFrm.submit();
+	}
+<@end@>
+
+<!-- Add the AddRelatedFrm form -->
+<@dynamichtml searchapi_result_page_end@>
+	<$include super.searchapi_result_page_end$>
+
+	<$if isRelatedContent and isTrue(isRelatedContent)$>
+		<form name="AddRelatedFrm" action="<$HttpCgiPath$>" method="GET">
+			<input type=hidden name=IdcService value="ADD_RELATED_CONTENT">
+			<input type=hidden name=dLinkTypeID value="<$dLinkTypeID$>">
+			<input type=hidden name=dSource value="<$originalSource$>">
+			<input type=hidden name=dID value="<$originalID$>">
+			<input type=hidden name=addLinkID value="">
+			<input type=hidden name=isReciprocal value="0"$>
+		</form>
+	<$endif$>
+<@end@>
+
+<!-- Update navigation links when linking existing items on the search results pages. -->
+<@dynamichtml searchapi_navigation_previous@>
+	<$include super.searchapi_navigation_previous$>
+	<$include related_content_search_navigation_parameters$>
+<@end@>
+
+<@dynamichtml searchapi_navigation_specific_page@>
+	<$include super.searchapi_navigation_specific_page$>
+	<$include related_content_search_navigation_parameters$>
+<@end@>
+
+<@dynamichtml searchapi_navigation_next_page@>
+	<$include super.searchapi_navigation_next_page$>
+	<$include related_content_search_navigation_parameters$>
+<@end@>
+
+<@dynamichtml related_content_search_navigation_parameters@>
+	<$if isRelatedContent and isTrue(isRelatedContent) and (not isRmaNavigation)$>
+		&isRelatedContent=1
+		&dLinkTypeID=<$dLinkTypeID$>
+		<$if dLinkClassID$>&dLinkClassID=<$dLinkClassID$><$endif$>
+		<$if originalSource$>&originalSource=<$originalSource$><$endif$>
+		&originalID=<$originalID$>
+		&originalName=<$originalName$>
+	<$endif$>
+<@end@>
+
+</body>
+</html>

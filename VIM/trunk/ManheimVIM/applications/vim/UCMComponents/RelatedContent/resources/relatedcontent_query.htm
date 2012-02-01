@@ -1,0 +1,418 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+RelatedContent query
+</title>
+</head>
+<body>
+
+<@table RelatedContent_Queries@>
+<table border=1><caption><strong>Query Definition Table</strong></caption>
+<tr>
+	<td>name</td>
+	<td>queryStr</td>
+	<td>parameters</td>
+</tr>
+
+<!-- Related content type queries -->
+<tr>
+	<td>DrelatedType</td>
+	<td>DELETE FROM RelatedTypes
+		WHERE dLinkTypeID = ?</td>
+	<td>dLinkTypeID int</td>
+</tr>
+<tr>
+	<td>IrelatedType</td>
+	<td>INSERT INTO RelatedTypes (dLinkTypeID, dLinkClassID, dLinkTypeName,
+			dLinkTypeDestName, dIsLinkByName, dIsSystemLink)
+		VALUES(?, ?, ?, ?, ?, ?)</td>
+	<td>dLinkTypeID int
+		dLinkClassID varchar
+		dLinkTypeName varchar
+		dLinkTypeDestName varchar
+		dIsLinkByName boolean
+		dIsSystemLink boolean</td>
+</tr>
+<tr>
+	<td>QrelatedTypes</td>
+	<td>SELECT * FROM RelatedTypes
+		ORDER BY dLinkTypeID</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QrelatedTypesByID</td>
+	<td>SELECT * FROM RelatedTypes
+		WHERE dLinkTypeID = ?</td>
+	<td>dLinkTypeID int</td>
+</tr>
+<tr>
+	<td>QrelatedTypesByName</td>
+	<td>SELECT * FROM RelatedTypes
+		WHERE dLinkTypeName = ?</td>
+	<td>dLinkTypeName varchar</td>
+</tr>
+<tr>
+	<td>QrelatedTypesMaxID</td>
+	<td>SELECT MAX(dLinkTypeID) AS dLinkTypeID
+		FROM RelatedTypes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UrelatedType</td>
+	<td>UPDATE RelatedTypes
+		SET dLinkTypeName = ?, dLinkTypeDestName = ?, dIsLinkByName = ?
+		WHERE dLinkTypeID = ?</td>
+	<td>dLinkTypeName varchar
+		dLinkTypeDestName varchar
+		dIsLinkByName boolean
+		dLinkTypeID int</td>
+</tr>
+
+<!-- Related content queries -->
+<tr>
+	<td>DrelatedContentByDocID</td>
+	<td>DELETE FROM RelatedContent
+		WHERE dSource = ? AND dID = ?</td>
+	<td>dSource varchar
+		dID int</td>
+</tr>
+<tr>
+	<td>DrelatedContentByDocName</td>
+	<td>DELETE FROM RelatedContent
+		WHERE dSource = ? AND dDocName = ?</td>
+	<td>dSource varchar
+		dDocName varchar</td>
+</tr>
+<tr>
+	<td>DrelatedContentByKey</td>
+	<td>DELETE FROM RelatedContent
+		WHERE dLinkKey = ?</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>DrelatedContentByKeyAndID</td>
+	<td>DELETE FROM RelatedContent
+		WHERE dLinkKey = ? AND dSource = ? AND dID = ?</td>
+	<td>dLinkKey varchar
+		dSource varchar
+		dID int</td>
+</tr>
+<tr>
+	<td>DrelatedContentByKeyAndName</td>
+	<td>DELETE FROM RelatedContent
+		WHERE dLinkKey = ? AND dSource = ? AND dDocName = ?</td>
+	<td>dLinkKey varchar
+		dSource varchar
+		dDocName varchar</td>
+</tr>
+<tr>
+	<td>DrelatedContentByNumberLinked</td>
+	<td>DELETE FROM RelatedContent
+		WHERE dNumberLinked < 2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QrelatedContentByParentID</td>
+	<td>SELECT dLinkKey FROM RelatedContent WHERE dSource = ? AND dID = ? AND dIsParent = 1</td>
+	<td>dSource varchar
+		dID int</td>
+</tr>
+<tr>
+	<td>QrelatedContentByParentName</td>
+	<td>SELECT dLinkKey FROM RelatedContent WHERE dSource = ? AND dDocName = ? AND dIsParent = 1</td>
+	<td>dSource varchar
+		dDocName varchar</td>
+</tr>
+
+<tr>
+	<td>DrelatedContentDeletedRows</td>
+	<td>DELETE FROM DeletedRows
+		WHERE dTable = 'RelatedContent' AND dPrimaryKeys = ?</td>
+	<td>dPrimaryKeys varchar</td>
+</tr>
+
+<tr>
+	<td>IrelatedContent</td>
+	<td>INSERT INTO RelatedContent (dLinkKey, dLinkTypeID, dSource, dID, dDocName,
+			dOrderID, dIsParent, dParentSource, dParentID, dParentName, dIsMarkedDelete,
+			dNumberLinked, dLastModifiedDate)
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)</td>
+	<td>dLinkKey varchar
+		dLinkTypeID int
+		dSource varchar
+		dID int
+		dDocName varchar
+		dOrderID int
+		dIsParent boolean
+		dParentSource varchar
+		dParentID boolean
+		dParentName varchar
+		dIsMarkedDelete boolean
+		dNumberLinked int
+		dLastModifiedDate datetime</td>
+</tr>
+<tr>
+	<td>QrelatedContentByDocID</td>
+	<td>SELECT RelatedContent.dSource, RelatedContent.dOrderID, Revisions.*, DocMeta.*
+		FROM RelatedContent, Revisions, DocMeta
+		WHERE RelatedContent.dLinkKey = ?
+		AND RelatedContent.dSource = 'CS'
+		AND RelatedContent.dID = Revisions.dID
+		AND Revisions.dID = DocMeta.dID</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentByDocName</td>
+	<td>SELECT RelatedContent.dSource, RelatedContent.dOrderID, Revisions.*, DocMeta.*
+		FROM RelatedContent, Revisions, DocMeta
+		WHERE RelatedContent.dLinkKey = ?
+		AND RelatedContent.dSource = 'CS'
+		AND RelatedContent.dDocName = Revisions.dDocName
+		AND Revisions.dID = DocMeta.dID
+		AND Revisions.dID = (SELECT MAX(dID) FROM Revisions WHERE dDocName = RelatedContent.dDocName)
+		ORDER BY Revisions.dDocName, Revisions.dID DESC</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentByKey</td>
+	<td>SELECT * FROM RelatedContent
+		WHERE dLinkKey = ?
+		ORDER BY dOrderID</td>
+	</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentByKeyAndID</td>
+	<td>SELECT * FROM RelatedContent
+		WHERE dLinkKey = ? AND dSource = ? AND dID = ?</td>
+	<td>dLinkKey varchar
+		dSource varchar
+		dID int</td>
+</tr>
+<tr>
+	<td>QrelatedContentByKeyAndName</td>
+	<td>SELECT * FROM RelatedContent
+		WHERE dLinkKey = ? AND dSource = ? AND dDocName = ?</td>
+	<td>dLinkKey varchar
+		dSource varchar
+		dDocName varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentByKeyDesc</td>
+	<td>SELECT * FROM RelatedContent
+		WHERE dLinkKey = ?
+		ORDER BY dOrderID DESC</td>
+	</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentByTypeID</td>
+	<td>SELECT * FROM RelatedContent
+		WHERE dLinkTypeID = ?</td>
+	</td>
+	<td>dLinkTypeID int</td>
+</tr>
+<tr>
+	<td>QrelatedContentCountByKey</td>
+	<td>SELECT COUNT(*) AS numRows FROM RelatedContent
+		WHERE dLinkKey = ?</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentKeyByDocID</td>
+	<td>SELECT dLinkKey FROM RelatedContent
+		WHERE dLinkTypeID = ? AND dSource = ? AND dID = ? AND dIsParent = ?</td>
+	<td>dLinkTypeID int
+		dSource varchar
+		dID int
+		dIsParent boolean</td>
+</tr>
+<tr>
+	<td>QrelatedContentKeyByDocName</td>
+	<td>SELECT dLinkKey FROM RelatedContent
+		WHERE dLinkTypeID = ? AND dSource = ? AND dDocName = ? AND dIsParent = ?
+		ORDER BY dID DESC</td>
+	<td>dLinkTypeID int
+		dSource varchar
+		dDocName varchar
+		dIsParent boolean</td>
+</tr>
+<tr>
+	<td>QrelatedContentKeyByDocNameAll</td>
+	<td>SELECT dLinkKey FROM RelatedContent
+		WHERE dSource = ? AND dDocName = ?</td>
+	<td>dSource varchar
+		dDocName varchar</td>
+</tr>
+<tr>
+	<td>DrelatedContentMarkedDelete</td>
+	<td>DELETE FROM RelatedContent
+		WHERE dLinkTypeID = ? AND dIsMarkedDelete = 1</td>
+	<td>dLinkTypeID int</td>
+</tr>
+<tr>
+	<td>QrelatedContentMaxOrderID</td>
+	<td>SELECT MAX(dOrderID) AS dOrderID FROM RelatedContent
+		WHERE dLinkKey = ?</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>UrelatedContentNumLinkedByKey</td>
+	<td>UPDATE RelatedContent
+		SET dNumberLinked = ?
+		WHERE dLinkKey = ?</td>
+	<td>dNumberLinked int
+		dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentNumLinkedZero</td>
+	<td>SELECT DISTINCT dLinkKey AS dLinkKey
+		FROM RelatedContent
+		WHERE dNumberLinked = 0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QrelatedContentParentsByDocID</td>
+	<td>SELECT RelatedContent.dParentSource AS dSource, Revisions.*, DocMeta.*
+		FROM RelatedContent, Revisions, DocMeta
+		WHERE RelatedContent.dLinkTypeID = ?
+		AND RelatedContent.dSource = ?
+		AND RelatedContent.dIsParent = 0
+		AND RelatedContent.dParentSource = 'CS'
+		AND RelatedContent.dID = ?
+		AND RelatedContent.dParentID = Revisions.dID
+		AND Revisions.dID = DocMeta.dID</td>
+	<td>dLinkTypeID int
+		dSource varchar
+		dID int</td>
+</tr>
+<tr>
+	<td>QrelatedContentParentsByDocName</td>
+	<td>SELECT RelatedContent.dParentSource AS dSource, Revisions.*, DocMeta.*
+		FROM RelatedContent, Revisions, DocMeta
+		WHERE RelatedContent.dLinkTypeID = ?
+		AND RelatedContent.dSource = ?
+		AND RelatedContent.dDocName = ?
+		AND RelatedContent.dIsParent = 0
+		AND RelatedContent.dParentSource = 'CS'
+		AND RelatedContent.dParentName = Revisions.dDocName
+		AND Revisions.dID = DocMeta.dID
+		AND Revisions.dID = (SELECT MAX(dID) FROM Revisions WHERE dDocName = RelatedContent.dParentName)
+		ORDER BY Revisions.dDocName, Revisions.dID DESC</td>
+	<td>dLinkTypeID int
+		dSource varchar
+		dDocName varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentParentSources</td>
+	<td>SELECT DISTINCT dParentSource AS dSource
+		FROM RelatedContent
+		WHERE dLinkTypeID = ? AND dSource = ? AND dDocName = ? AND dIsParent = 0</td>
+	<td>dLinkTypeID int
+		dSource varchar
+		dDocName varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentSources</td>
+	<td>SELECT DISTINCT dSource AS dSource
+		FROM RelatedContent
+		WHERE dLinkKey = ?</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>QrelatedContentTypeIDByDocID</td>
+	<td>SELECT DISTINCT dLinkTypeID AS dLinkTypeID, dIsParent AS dIsParent
+		FROM RelatedContent
+		WHERE dSource = ? AND dID = ?</td>
+	<td>dSource varchar
+		dID int</td>
+</tr>
+<tr>
+	<td>QrelatedContentTypeIDByDocName</td>
+	<td>SELECT DISTINCT dLinkTypeID AS dLinkTypeID, dIsParent AS dIsParent
+		FROM RelatedContent
+		WHERE dSource = ? AND dDocName = ?</td>
+	<td>dSource varchar
+		dDocName varchar</td>
+</tr>
+<tr>
+	<td>UrelatedContentDecrementNumberLinked</td>
+	<td>UPDATE RelatedContent
+		SET dNumberLinked = dNumberLinked - 1
+		WHERE dLinkKey IN
+		(SELECT dLinkKey FROM RelatedContent WHERE dSource = ? AND dID = ?)</td>
+	<td>dSource varchar
+		dID int</td>
+</tr>
+<tr>
+	<td>UrelatedContentDecrementNumberLinked2</td>
+	<td>UPDATE RelatedContent
+		SET dNumberLinked = dNumberLinked - 1
+		WHERE dLinkKey = ?</td>
+	<td>dLinkKey varchar</td>
+</tr>
+<tr>
+	<td>UrelatedContentDecrementNumberLinked3</td>
+	<td>UPDATE RelatedContent
+		SET dNumberLinked = dNumberLinked - 1
+		WHERE dLinkKey IN
+		(SELECT dLinkKey FROM RelatedContent WHERE dLinkTypeID = ? AND dIsMarkedDelete = 1)</td>
+	<td>dLinkTypeID int</td>
+</tr>
+<tr>
+	<td>UrelatedContentInitNumLinked</td>
+	<td>UPDATE RelatedContent SET dNumberLinked = 0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UrelatedContentLinkKeyOrderID</td>
+	<td>UPDATE RelatedContent
+		SET dLinkKey = ?, dOrderID = dOrderID + ?
+		WHERE dLinkKey = ?</td>
+	<td>dLinkKey varchar
+		addOrderID int
+		oldLinkKey varchar</td>
+</tr>
+<tr>
+	<td>UrelatedContentNumLinkedByKey</td>
+	<td>UPDATE RelatedContent
+		SET dNumberLinked = ?
+		WHERE dLinkKey = ?</td>
+	<td>dNumberLinked int
+		dLinkKey varchar</td>
+</tr>
+
+<!-- Content item queries -->
+<tr>
+	<td>UrevisionStates</td>
+	<td>UPDATE Revisions SET dReleaseState = 'U', dIndexerState = ' '
+		WHERE dID = ?</td>
+	<td>dID int</td>
+</tr>
+
+<!-- Import related content queries -->
+<tr>
+	<td>UrelatedContentUnresolvedImport</td>
+	<td>UPDATE RelatedContent
+		SET dID = ?, dDocName = ?
+		WHERE dDocName = ? AND dID < 0</td>
+	<td>dID int
+		dDocName varchar
+		docNameRevLabel varchar</td>
+</tr>
+<tr>
+	<td>UrelatedContentUnresolvedImport2</td>
+	<td>UPDATE RelatedContent
+		SET dParentID = ?, dParentName = ?
+		WHERE dParentName = ? AND dParentID < 0</td>
+	<td>dParentID int
+		dParentName varchar
+		parentDocNameRevLabel varchar</td>
+</tr>
+
+</table>
+<@end@>
+
+</body>
+</html>

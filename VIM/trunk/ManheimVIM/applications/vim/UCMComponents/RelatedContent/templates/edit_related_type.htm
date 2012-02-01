@@ -1,0 +1,108 @@
+<$include std_doctype_html_decl$>
+
+<$loop RelatedTypeInfo$>
+
+<head>
+	<$defaultPageTitle=lc("wwRelatedTypeEdit", dLinkTypeName)$>
+	<$include std_html_head_declarations$>
+
+	<script>
+		function setLinkByNameFlag(frm)
+		{
+			if (frm.linkByName_checkbox.checked)
+			{
+				frm.dIsLinkByName.value = "1";
+			}
+			else
+			{
+				frm.dIsLinkByName.value = "0";
+			}
+		}
+	</script>
+</head>
+
+<$include body_def$>
+
+<$include std_page_begin$>
+
+<$include std_header$>
+
+<table border=0 cellpadding=2 cellspacing=0>
+<caption align=top><h4 class=pageTitle><$defaultPageTitle$></h4></caption>
+<tr>
+	<td colspan=2>
+		<a class='xuiBreadcrumb_link' href='<$HttpCgiPath$>?IdcService=GET_RELATED_TYPES'><$lc("wwRelatedTypes")$></a>
+	  	-->
+		<span class='xuiBreadcrumb_link'><$defaultPageTitle$></span>
+	</td>
+</tr>
+<tr>
+	<td>&nbsp;<br></td>
+</tr>
+
+<form name="EditRelatedTypeForm" method="GET" action="<$HttpCgiPath$>">
+<input type=hidden name=IdcService value="EDIT_RELATED_TYPE">
+<input type=hidden name=dLinkTypeID value="<$dLinkTypeID$>">
+
+<tr>
+	<td colspan=2><hr></td>
+</tr>
+
+<tr>
+	<td width=30%><span class=requiredField><$lc("wwLabelName")$></span></td>
+	<td width=70%>
+		<$if isTrue(dIsSystemLink)$>
+			<span class=tableEntry><$dLinkTypeName$></span>
+		<$else$>
+			<input type=text size=50 name=dLinkTypeName value="<$dLinkTypeName$>" maxlength=50>
+		<$endif$>
+	</td>
+</tr>
+
+<$if strEquals(dLinkClassID, "PC") or strEquals(dLinkClassID, "CR")$>
+<tr>
+	<td width=30%><span class=tableEntry><$lc("wwRelatedTypeDestination")$></span></td>
+	<td width=70%>
+		<$if isTrue(dIsSystemLink)$>
+			<span class=tableEntry><$dLinkTypeDestName$></span>
+		<$else$>
+			<input type=text size=50 name=dLinkTypeDestName value="<$dLinkTypeDestName$>" maxlength=50>
+		<$endif$>
+	</td>
+</tr>
+<$endif$>
+
+<tr>
+	<td width=30%><span class=tableEntry><$lc("wwRelatedTypeClass")$></span></td>
+	<td width=70%><span class=tableEntry><$dLinkClassName$></span></td>
+</tr>
+
+<tr>
+	<td width=30%>&nbsp;</td>
+	<td width=70%>
+		<input type=hidden name=dIsLinkByName value="<$dIsLinkByName$>">
+		<input type=checkbox name=linkByName_checkbox <$if isTrue(dIsLinkByName)$> checked<$endif$>
+			onClick="setLinkByNameFlag(document.EditRelatedTypeForm)">
+		<span class=tableEntry><$lc("wwRelatedTypeLinkByName")$></span>
+	</td>
+</tr>
+
+<tr>
+	<td colspan=2><hr></td>
+</tr>
+
+<tr align=center>
+	<td colspan=2 width=100%><input type=submit name=Submit value="<$lc("wwEdit")$>">
+	<input type=reset name=Reset value="<$lc("wwReset")$>">
+</tr>
+
+</form>
+
+</table>
+
+<$include std_page_end$>
+
+<$endloop$>
+
+</body>
+</html>

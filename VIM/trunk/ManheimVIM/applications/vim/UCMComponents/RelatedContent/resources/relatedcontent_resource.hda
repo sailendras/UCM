@@ -1,0 +1,20 @@
+<?hda version="10gR3-dev" jcharset=Cp1252 encoding=iso-8859-1?>
+@Properties LocalData
+blFieldTypes=
+blDateFormat=M/d/yy {h:mm[:ss] {aa}[zzz]}!mAM,PM!tAmerica/Denver
+@end
+
+
+@ResultSet RelatedContent_RmaAdminMenu
+5
+nodes
+quick
+href
+condition
+loadOrder
+RELATED_TYPES,CONFIG
+
+<$HttpCgiPath$>?IdcService=GET_RELATED_TYPES
+<$if hasRmaRights("admin.configureLinks")$>1<$else$>0<$endif$>
+70
+@end

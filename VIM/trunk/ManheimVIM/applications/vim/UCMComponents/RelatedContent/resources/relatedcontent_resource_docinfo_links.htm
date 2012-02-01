@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+RelatedContent htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<!-- Include the related content links on the content information page. -->
+<@dynamichtml std_docinfo_doc_links@>
+	<$include super.std_docinfo_doc_links$>
+	<$include related_content_doc_info_links$>
+<@end@>
+
+<!-- Include the related content links on the external content information page. -->
+<@dynamichtml erm_custom_info_page_content@>
+	<$include super.erm_custom_info_page_content$>
+	<$if ermObject and strEqualsIgnoreCase(ermObject, "EXTERNAL_ITEM")$>
+		<$isExternalItem=1$>
+	<$endif$>
+
+	<$if isExternalItem$>
+		<tr>
+			<td>&nbsp;</td>
+			<td colspan=2><div class="xuiSubheading"><$lc("wwRelatedContent")$></div></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+				<table>
+					<$include related_content_doc_info_links$>
+				</table>
+			</td>
+		</tr>
+	<$endif$>
+<@end@>
+
+<!-- Display the related content links on both internal and external content information pages. -->
+<@dynamichtml related_content_doc_info_links@>
+	<$isFirstType=1$>
+	<$linkFlag="&nbsp;(<font color=red>+</font>)"$>
+
+	<$loop DocInfoRelatedTypes$>
+		<tr>
+			<$if isFirstType and (not isExternalItem)$>
+				<$isFirstType=""$>
+				<td nowrap align="right"><span class="infoLabel"><$lc("wwRelatedContentLabel")$></span></td>
+			<$else$>
+				<td nowrap align="right"><span class="infoLabel">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+			<$endif$>
+
+			<td>
+				<span class="tableEntry"><a href="<$HttpCgiPath$>?IdcService=GET_RELATED_CONTENT<$if dSource$>&dSource=<$dSource$><$endif$>
+					&dID=<$dID$>&dLinkTypeID=<$dLinkTypeID$><$strTrimWs(inc("related_content_core_content_param"))$>"><$dLinkTypeName$></a><$if dIsLinked$><$linkFlag$><$endif$></span>
+			</td>
+
+			<$if dIsParentClass$>
+			<tr>
+				<td nowrap align="right"><span class="infoLabel">&nbsp;</span></td>
+
+				<td>
+					<span class="tableEntry">&nbsp;&nbsp;&nbsp;&nbsp;<a href="<$HttpCgiPath$>?IdcService=GET_RELATED_CONTENT<$if dSource$>&dSource=<$dSource$><$endif$>
+						&dID=<$dID$>&dLinkTypeID=<$dLinkTypeID$>&isGetParents=1<$strTrimWs(inc("related_content_core_content_param"))$>"><$dLinkTypeDestName$></a><$if dIsParentLinked$><$linkFlag$><$endif$></span>
+				</td>
+			</tr>
+			<$endif$>
+		</tr>
+
+		<$isFirstType=""$>
+	<$endloop$>
+<@end@>
+
+</body>
+</html>
