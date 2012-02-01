@@ -118,6 +118,15 @@ VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/lockwait.dat 
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/manifest.hda -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/readme.htm -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledEvent/scheduled_event_resource.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/ScheduledTimeEvents.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/classes/ScheduledTimeEvents.jar -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/lockwait.dat -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/manifest.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/readme.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/resources/lang/wwStrings.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/resources/scheduledtimeevents_resource.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/resources/scheduledtimeevents_resource_script.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ScheduledTimeEvents/resources/scheduledtimeevents_resource_tables.htm -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.classpath -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.externalToolBuilders/XMLBeansGen.launch -text
 VIM/trunk/ManheimVIM/applications/vim/schemas/.project -text

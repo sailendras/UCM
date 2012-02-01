@@ -1,0 +1,191 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+ScheduledTimeEvents htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<@dynamichtml scheduled_time_events_script@>
+	function processScheduledEvents(frm)
+	{
+		// Process the updated events.
+		if (!processScheduledEventsEx(frm, true))
+		{
+			return false;
+		}
+
+		// Process the added events.
+		if (!processScheduledEventsEx(frm, false))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	function processScheduledEventsEx(frm, isUpdate)
+	{
+		var eventNumber = 1;
+		var startPrefix, eventPrefix;
+		var startHour, endHour;
+		var startHourDisplay, endHourDisplay;
+
+		if (isUpdate)
+		{
+			startPrefix = "update:event";
+		}
+		else
+		{
+			startPrefix = "add:event";
+		}
+
+		while (true)
+		{
+			eventPrefix = startPrefix + eventNumber;
+			if (!frm[eventPrefix + ":interval"])
+			{
+				break;
+			}
+
+			if (!validateScheduledEventInterval(frm, isUpdate, eventNumber))
+			{
+				return false;
+			}
+
+			startHour = setScheduledEventHour(frm, isUpdate, eventNumber, true);
+			endHour = setScheduledEventHour(frm, isUpdate, eventNumber, false);
+
+			if (startHour >= endHour)
+			{
+				startHourDisplay = getHourDisplay(startHour);
+				endHourDisplay = getHourDisplay(endHour);
+
+				alert("The hour range '" + startHourDisplay + " - " + endHourDisplay + "' is invalid.");
+
+				return false;
+			}
+
+			++eventNumber;
+		}
+
+		if (isUpdate)
+		{
+			frm.numUpdateScheduledEvents.value = eventNumber - 1;
+
+		}
+		else
+		{
+			frm.numAddScheduledEvents.value = eventNumber - 1;
+		}
+
+		return true;
+	}
+
+	function validateScheduledEventInterval(frm, isUpdate, eventNumber)
+	{
+		var eventPrefix = getScheduledEventPrefix(isUpdate, eventNumber);
+		var intervalStr, interval;
+
+		intervalStr = frm[eventPrefix + ":interval"].value;
+		interval = parseInt(intervalStr);
+
+		if (isNaN(interval) || (interval <= 0) || (interval > 365))
+		{
+			alert("The interval value '" + intervalStr + "' is invalid.");
+			return false;
+		}
+
+		return true;
+	}
+
+	function setScheduledEventHour(frm, isUpdate, eventNumber, isStartHour)
+	{
+		var eventPrefix = getScheduledEventPrefix(isUpdate, eventNumber);
+		var hourField, hourSelectField;
+		var hourMeridianSelectField, meridian;
+		var hour;
+
+		if (isStartHour)
+		{
+			hourField = eventPrefix + ":startHour";
+		}
+		else
+		{
+			hourField = eventPrefix + ":endHour";
+		}
+		hourSelectField = hourField + "Select";
+		hourMeridianSelectField = hourField + "MeridianSelect";
+
+		hour = parseInt(frm[hourSelectField].value);
+		meridian = frm[hourMeridianSelectField].value;
+
+		if (meridian == "AM")
+		{
+			if (hour == 12)
+			{
+				if (isStartHour)
+				{
+					hour = 0;
+				}
+				else
+				{
+					hour = 24;
+				}
+			}
+		}
+		else if (hour < 12)
+		{
+			hour += 12;
+		}
+
+		frm[hourField].value = hour;
+
+		return hour;
+	}
+
+	function getScheduledEventPrefix(isUpdate, eventNumber)
+	{
+		var eventPrefix;
+
+		if (isUpdate)
+		{
+			eventPrefix = "update:event" + eventNumber;
+		}
+		else
+		{
+			eventPrefix = "add:event" + eventNumber;
+		}
+
+		return eventPrefix;
+	}
+
+	function getHourDisplay(hour)
+	{
+		var hourDisplay;
+
+		if ((hour == 0) || (hour == 24))
+		{
+			hourDisplay = "12 AM";
+		}
+		else if (hour < 12)
+		{
+			hourDisplay = hour + " AM";
+		}
+		else if (hour == 12)
+		{
+			hourDisplay = "12 PM";
+		}
+		else
+		{
+			hour -= 12;
+			hourDisplay = hour + " PM";
+		}
+
+		return hourDisplay;
+	}
+<@end@>
+
+</body>
+</html>

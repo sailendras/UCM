@@ -1,0 +1,180 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>
+ScheduledTimeEvents htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<@dynamichtml scheduled_time_events_row_entry@>
+	<$include prepare_scheduled_time_events_row_entry$>
+
+	<$include scheduled_time_events_row_entry_begin$>
+	<$include scheduled_time_events_clause1$>
+	<$include scheduled_time_events_interval$>
+	<$include scheduled_time_events_interval_type$>
+	<$include scheduled_time_events_clause2$>
+
+	<$isStartHour=1$>
+	<$include scheduled_time_events_hour_meridian$>
+
+	<$include scheduled_time_events_clause3$>
+
+	<$isStartHour=""$>
+	<$include scheduled_time_events_hour_meridian$>
+
+	<$include scheduled_time_events_row_entry_end$>
+<@end@>
+
+<@dynamichtml prepare_scheduled_time_events_row_entry@>
+	<$if not ScheduledTimeEventsSpanClass$>
+		<$ScheduledTimeEventsSpanClass="tableEntry"$>
+	<$endif$>
+
+	<$if not scheduledUpdateCounter$>
+		<$scheduledUpdateCounter = 0$>
+		<input type=hidden name=numUpdateScheduledEvents value="0">
+	<$endif$>
+
+	<$if not scheduledAddCounter$>
+		<$scheduledAddCounter = 0$>
+		<input type=hidden name=numAddScheduledEvents value="0">
+	<$endif$>
+
+	<$if ScheduledTimeEvents and ScheduledTimeEvents.eventName$>
+		<$scheduledUpdateCounter = scheduledUpdateCounter + 1$>
+		<$eventNamePrefix = "update:event" & scheduledUpdateCounter$>
+		<input type=hidden name=<$eventNamePrefix$>:eventName value="<$ScheduledTimeEvents.eventName$>">
+	<$else$>
+		<$scheduledAddCounter = scheduledAddCounter + 1$>
+		<$eventNamePrefix = "add:event" & scheduledAddCounter$>
+	<$endif$>
+<@end@>
+
+<@dynamichtml scheduled_time_events_row_entry_begin@>
+
+<@end@>
+
+<@dynamichtml scheduled_time_events_row_entry_end@>
+
+<@end@>
+
+<@dynamichtml scheduled_time_events_clause1@>
+	<span class=<$ScheduledTimeEventsSpanClass$>><$lc("wwSTERunEvery")$>&nbsp;</span>
+<@end@>
+
+<@dynamichtml scheduled_time_events_clause2@>
+	<span class=<$ScheduledTimeEventsSpanClass$>>&nbsp;<$lc("wwSTEBetween")$>&nbsp;</span>
+<@end@>
+
+<@dynamichtml scheduled_time_events_clause3@>
+	<span class=<$ScheduledTimeEventsSpanClass$>>&nbsp;<$lc("wwSTEAnd")$>&nbsp;</span>
+<@end@>
+
+<@dynamichtml scheduled_time_events_interval@>
+	<input type=text name=<$eventNamePrefix$>:interval
+		value="<$if ScheduledTimeEvents and ScheduledTimeEvents.interval$><$ScheduledTimeEvents.interval$><$else$>1<$endif$>" size=1>
+<@end@>
+
+<@dynamichtml scheduled_time_events_interval_type@>
+	<$if ScheduledTimeEvents and ScheduledTimeEvents.intervalType$>
+		<$if strEquals(ScheduledTimeEvents.intervalType, "inDays")$>
+			<$isInDays=1$>
+		<$else$>
+			<$isInDays=""$>
+		<$endif$>
+	<$else$>
+		<$isInDays=1$>
+	<$endif$>
+
+	<select name=<$eventNamePrefix$>:intervalType>
+		<option value="inDays"<$if isInDays$> selected<$endif$>><$lc("wwSTEDays")$></option>
+		<option value="inHours"<$if not isInDays$> selected<$endif$>><$lc("wwSTEHours")$></option>
+	</select>
+<@end@>
+
+<@dynamichtml scheduled_time_events_hour_meridian@>
+	<$if isStartHour$>
+		<$hourField = "startHour"$>
+
+		<$if ScheduledTimeEvents and ScheduledTimeEvents.startHour$>
+			<$curHour=ScheduledTimeEvents.startHour$>
+		<$else$>
+			<$curHour = 0$>
+		<$endif$>
+	<$else$>
+		<$hourField = "endHour"$>
+
+		<$if ScheduledTimeEvents and ScheduledTimeEvents.endHour$>
+			<$curHour=ScheduledTimeEvents.endHour$>
+		<$else$>
+			<$curHour = 2$>
+		<$endif$>
+	<$endif$>
+
+	<$include scheduled_time_events_get_hour_meridian_values$>
+
+	<$include scheduled_time_events_hour$>
+	<$include scheduled_time_events_meridian$>
+<@end@>
+
+<@dynamichtml scheduled_time_events_hour@>
+	<select name=<$eventNamePrefix$>:<$hourField$>Select>
+		<$loopHour=1$>
+		<$loopwhile loopHour <= 12$>
+			<option value="<$loopHour$>" <$if strEquals(loopHour, curHour)$>selected<$endif$>><$loopHour$></option>
+			<$loopHour = loopHour + 1$>
+		<$endloop$>
+	</select>
+
+	<input type=hidden name=<$eventNamePrefix$>:<$hourField$> value="">
+<@end@>
+
+<@dynamichtml scheduled_time_events_meridian@>
+	<select name=<$eventNamePrefix$>:<$hourField$>MeridianSelect>
+		<option value="AM" <$if strEquals(curMeridian, "AM")$>selected<$endif$>><$lc("wwSTEAM")$></option>
+		<option value="PM" <$if strEquals(curMeridian, "PM")$>selected<$endif$>><$lc("wwSTEPM")$></option>
+	</select>
+<@end@>
+
+<@dynamichtml scheduled_time_events_get_hour_meridian_values@>
+	<$if not curHour$>
+		<$curHour = 0$>
+	<$endif$>
+
+	<$if (curHour == 0) or (curHour == 24)$>
+		<$curHour = 12$>
+		<$curMeridian = "AM"$>
+	<$elseif curHour < 12$>
+		<$curMeridian = "AM"$>
+	<$elseif curHour == 12$>
+		<$curMeridian = "PM"$>
+	<$else$>
+		<$curHour = curHour - 12$>
+		<$curMeridian = "PM"$>
+	<$endif$>
+<@end@>
+
+<@dynamichtml scheduled_time_events_allow_script@>
+	<!-- Get the current time -->
+	<$now = dateCurrent()$>
+	<$midnight = parseDate(formatDateOnly(now))$>
+	<$currentTime = toInteger(parseDate(now) - parseDate(midnight))$>
+
+	<!-- Get the time for the start of the hour range -->
+	<$startHour = getValue("#env", action & "_StartHour")$>
+	<$startTime = startHour * 60 * 60 * 1000$>
+
+	<!-- Get the time for the end of the hour range -->
+	<$endHour = getValue("#env", action & "_EndHour")$>
+	<$endTime = endHour * 60 * 60 * 1000$>
+
+	<!-- Determine if we are in the range to run the event -->
+	<$if (currentTime >= startTime) and (currentTime <= endTime)$>
+		<$doEvent = 1$>
+	<$endif$>
+<@end@>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<?hda version="10gR3-dev" jcharset=Cp1252 encoding=iso-8859-1?>
+@Properties LocalData
+blFieldTypes=
+DirectoryFilter=.svn*|Thumbs.db
+classpath=$COMPONENT_DIR/classes;$COMPONENT_DIR/classes/ScheduledTimeEvents.jar
+classpathorder=1
+blDateFormat=M/d/yy {h:mm[:ss] {aa}[zzz]}!mAM,PM!tAmerica/Chicago
+libpath=$COMPONENT_DIR/lib
+libpathorder=1
+version=10.1.3.5.0 (Build 06_03_2009)
+ComponentName=ScheduledTimeEvents
+hasPreferenceData=false
+@end
+@ResultSet ResourceDefinition
+4
+type
+filename
+tables
+loadOrder
+resource
+resources/scheduledtimeevents_resource_tables.htm
+null
+10
+resource
+resources/scheduledtimeevents_resource.htm
+null
+10
+resource
+resources/scheduledtimeevents_resource_script.htm
+null
+10
+resource
+resources/lang/wwStrings.htm
+null
+10
+@end
+@ResultSet Filters
+4
+type
+location
+parameter
+loadOrder
+extraAfterConfigInit
+scheduledtimeevents.ScheduledTimeEventsFilters
+extraAfterConfigInit
+10
+@end
+@ResultSet MergeRules
+4
+fromTable
+toTable
+column
+loadOrder
+ScheduledTimeEvents_ServiceHandlers
+ServiceHandlers
+null
+10
+@end
+@ResultSet ClassAliases
+3
+classname
+location
+loadOrder
+ScheduledSystemEvents
+scheduledtimeevents.CustomScheduledSystemEvents
+10
+@end
+
