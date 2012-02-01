@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE>Query Definition Resources</TITLE>
+</HEAD>
+<BODY>
+
+<!-- These are custom queries called by the DataAccess services to 
+     modify an existing database table  -->
+     
+<@table Manheim_VIM_URL_Pairing_2QueryTable@>
+<table border=1><caption><strong>Custom Query Definition Table</strong></caption>
+<tr>
+	<td>name</td><td>queryStr</td><td>parameters</td>
+</tr>
+
+<!-- obtain a dump of all the data in the DataAccess table -->
+<tr>
+	<td>queryUrlParing</td>
+	<td>SELECT * FROM VIM_URL_MAP ORDER BY CREATED_AT</td>
+	<td></td>
+</tr>
+
+<!-- check to see if an entry with the given daID already exists -->
+<tr>
+	<td>queryUrlParingEntryExists</td>
+	<td>SELECT * FROM VIM_URL_MAP WHERE auctionid=? and wo_num=? and image_seq=?</td>
+	<td>auctionId varchar
+	    woNum varchar
+	    imageSeq int</td>
+</tr>
+
+<!-- insert a new row into the DataAccess table -->
+<tr>
+	<td>insertUrlParing</td>
+	<td>INSERT INTO VIM_URL_MAP (auctionid, wo_num, image_seq,vimurl,created_at)
+		VALUES (?, ?, ?,?,?)</td>
+	<td>auctionId varchar
+	    woNum varchar
+	    imageSeq int
+	    vimUrl varchar
+	    createdAt date</td>
+</tr>
+
+<!-- delete a row from the DataAccess table -->
+<tr>
+	<td>deleteUrlParing</td>
+	<td>DELETE FROM VIM_URL_MAP WHERE vimurl=?</td>
+	<td>vimUrl varchar</td>
+</tr>
+
+<!-- update a row in the DataAccess table -->
+<tr>
+	<td>updateUrlParing</td>
+	<td>UPDATE VIM_URL_MAP SET auctionid= ?, wo_num= ?,image_seq=?,updated_at=?
+		WHERE VIM_URL_MAP.vimUrl=?</td>
+	<td>auctionId varchar
+	    woNum varchar
+	    imageSeq int
+	    updatedAt date
+	    vimUrl varchar</td>
+</tr>
+
+<tr>
+	<td>queryUrlParingVimUrlEntryExists</td>
+	<td>SELECT * FROM VIM_URL_MAP WHERE vimurl=?</td>
+	<td>vimUrl varchar</td>
+</tr>
+</table>
+<@end@>
+
+</BODY>
+</HTML>

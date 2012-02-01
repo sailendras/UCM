@@ -1,0 +1,24 @@
+﻿<?hda version="10.1.3.5.1 (100623)" jcharset=UTF8 encoding=utf-8?>
+@Properties LocalData
+blFieldTypes=CreateDate date
+install=true
+blDateFormat=M/d/yy {h:mm[:ss] {aa}[zzz]}!mAM,PM!tAfrica/Lome
+BackupZipName=/oracle/ucm-a1/server/data/components/Manheim_VIM_URL_Pairing_2/Manheim_VIM_URL_Pairing_2-20101115232214.zip
+Backup=true
+ComponentName=Manheim_VIM_URL_Pairing_2
+ZipName=/export/home/sdesai/Manheim_VIM_URL_Pairing_2_11_15.zip
+Overwrite=false
+CreateDate=11/15/10 4:54 PM
+@end
+@ResultSet Manifest
+2
+entryType
+location
+component
+Manheim_VIM_URL_Pairing_2/manheim_vim_url_pairing_2.hda
+componentExtra
+Manheim_VIM_URL_Pairing_2/readme.htm
+componentClasses
+Manheim_VIM_URL_Pairing_2/classes/
+@end
+

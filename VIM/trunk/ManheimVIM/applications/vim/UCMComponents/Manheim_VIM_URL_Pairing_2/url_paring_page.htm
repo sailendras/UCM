@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+	<$defaultPageTitle="URL Paring Page"$>
+	<$include std_html_head_declarations$>
+</head>
+
+<$include body_def$>
+
+<$include std_page_begin$>
+
+<$include std_header$>
+
+<!-- This is a dump of the cached DataAccess table -->
+<table>
+<tr>
+	<td colspan=3 align=center>
+		<h4 class=pageTitle>The URL Paring table</h4></td>
+</tr>
+<tr>
+	<td class=tableEntry><strong>Auction ID</strong></td>
+	<td class=tableEntry><strong>WO Num</strong></td>
+	<td class=tableEntry><strong>Image Seq</strong></td>
+	<td class=tableEntry><strong>VIM URL</strong></td>
+	<td class=tableEntry><strong>Created At</strong></td>
+	<td class=tableEntry><strong>Update At</strong></td>
+</tr>
+<$loop URL_PARING$>
+<tr>
+	<td class=tableEntry><$AUCTIONID$></td>
+	<td class=tableEntry><$WO_NUM$></td>
+	<td class=tableEntry><$IMAGE_SEQ$></td>
+	<td class=tableEntry><$VIMURL$></td>
+	<td class=tableEntry><$CREATED_AT$></td>
+	<td class=tableEntry><$UPDATED_AT$></td>
+</tr>
+<$endloop$>
+</table>
+
+
+<script>
+/**
+ * This JavaScript is used to set the value for
+ * IdcService in the AlterDataAccess form
+ */
+
+function doSubmit(serviceName)
+{
+	document.AlterDataAccess.IdcService.value = serviceName;
+	document.AlterDataAccess.submit();
+}
+</script>
+
+
+<!-- this form will allow the user to add new data to the table
+     by calling the proper service, that calls the correct query -->
+
+<table>
+<form name="AlterDataAccess" method=POST action="<$HttpCgiPath$>">
+<input type=hidden name=IdcService value="">
+<tr>
+	<td colspan=2>&nbsp;</td><!--spacer-->
+</tr>
+<tr>
+	<td colspan=2 align=center>
+		<h4 class=pageTitle>Alter the URL Paring table</h4></td>
+</tr>
+<tr>
+	<td class=tableEntry><strong>Auction ID</strong></td>
+	<td><input type=text name=auctionId value=""></td>
+</tr>
+<tr>
+	<td class=tableEntry><strong>WO Num</strong></td>
+	<td><input type=text name=woNum value=""></td>
+</tr>
+<tr>
+	<td class=tableEntry><strong>Image Seq</strong></td>
+	<td><input type=text name=imageSeq value=""></td>
+</tr>
+<tr>
+	<td class=tableEntry><strong>VIM URL</strong></td>
+	<td><input type=text name=vimUrl value=""></td>
+</tr>
+<tr>
+	<td class=tableEntry><strong>Created At</strong></td>
+	<td><input type=text name=createdAt value=""></td>
+</tr>
+<tr>
+	<td class=tableEntry><strong>Updated At</strong></td>
+	<td><input type=text name=updatedAt value=""></td>
+</tr>
+<tr>
+	<td colspan=2 align=center>
+		<input type=button value=" Add "    onClick="doSubmit('INSERT_URL_PARING_ROW')">
+		<input type=button value=" Delete " onClick="doSubmit('DELETE_URL_PARING_ROW')">
+		<input type=button value=" Update " onClick="doSubmit('UPDATE_URL_PARING_ROW')">
+		<input type=button value=" Refresh " onClick="doSubmit('GET_URL_PARING_PAGE')"></td>
+</tr>
+</form>
+</table>
+
+<$include std_page_end$>
+</body>
+</html>

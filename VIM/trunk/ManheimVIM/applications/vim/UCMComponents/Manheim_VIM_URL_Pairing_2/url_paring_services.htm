@@ -1,0 +1,98 @@
+﻿<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+
+<!-- all these services deal with displaying or altering the
+     UrlParing table.  Note that no custom Java code needs
+     to be written in order to access the database, provided
+     that the queries are properly defined in the content server. -->
+
+<@table Manheim_VIM_URL_Pairing_2Services@>
+<table border=1>
+<tr>
+	<td>Name</td><td>Attributes</td><td>Actions</td>
+</tr>
+
+<!-- This service will display the data access page, as well as
+     obtain a dump of the data in the UrlParing database table -->
+<tr>
+	<td>GET_URL_PARING_PAGE</td>
+	<td>DocService
+		61
+		URL_PARING_PAGE
+		null
+		null<br>
+		Unable to retrieve the root data access page.</td>
+	<td>5:queryUrlParing:URL_PARING::Unable to load the UrlParing table</td>
+</tr>
+
+<!-- this service will add a row to the UrlParing table, and
+     then refresh the page.  The first query begins a transaction,
+     checks to see if the entry exists, and if so throws an error.
+     The second performs the insert and ends the transaction.  The
+     third queries the table and obtains a dump of the data in it -->
+<tr>
+	<td>INSERT_URL_PARING_ROW</td>
+	<td>DocService
+		2
+		null
+		null
+		null<br>
+		Unable to retrieve the root data access page.</td>
+	<td>3:doSubService:INSERT_URL_PARING_ROW_SUB::null</td>
+</tr>
+
+<!-- this service will update a row in the UrlParing table, and
+     then refresh the page. The first query begins a transaction,
+     checks to see if the entry exists, and if NOT it throws an
+     error. The second performs the update and ends the transaction.
+     The third queries the table and obtains a dump of the data in it -->
+<tr>
+	<td>UPDATE_URL_PARING_ROW</td>
+	<td>DocService
+		2
+		URL_PARING_PAGE
+		SubService
+		null<br>
+		Unable to retrieve the root data access page.</td>
+	<td>2:updateUrlParing::beginTran,commitTran:Unable to update the row in the UrlParing table.</td>
+</tr>
+
+<!-- this service will delete a row from the UrlParing table, and
+     then refresh the page. The first query begins a transaction,
+     checks to see if the entry exists, and if NOT it throws an
+     error. The second performs the delete and ends the transaction.
+     The third queries the table and obtains a dump of the data in it -->
+<tr>
+	<td>DELETE_URL_PARING_ROW</td>
+	<td>DocService
+		2
+		URL_PARING_PAGE
+		SubService
+		null<br>
+		Unable to retrieve the root data access page.</td>
+	<td>1:queryUrlParingEntryExists:URL_PARING:mustExist,beginTran:Entry ''{vimurl}'' cannot be deleted.  It does not exist in the database.
+		2:deleteUrlParing::ignoreError,commitTran:Unable to delete the row from the UrlParing table.
+		5:queryUrlParing:URL_PARING::Unable to load the UrlParing table
+		3:prepareRedirect:IdcService=GET_URL_PARING_PAGE:0:null</td>
+</tr>
+
+<tr>
+	<td>INSERT_URL_PARING_ROW_SUB</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		Unable to retrieve the root data access page.</td>
+	<td>1:queryUrlParingEntryExists:URL_PARING:ignoreError,beginTran:Auction Id "{auctionId}",Work Order Number ''{woNum}'' and Image Sequence "{imageSeq}" cannot be added to the database.  The combination already exists.
+		2:insertUrlParing::ignoreError,commitTran:Unable to add a row to the UrlParing table.</td>
+</tr>
+</table>
+<@end@>
+
+</BODY>
+</HTML>

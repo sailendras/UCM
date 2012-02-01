@@ -1,0 +1,59 @@
+﻿<?hda version="10.1.3.5.1 (100623)" jcharset=UTF8 encoding=utf-8?>
+@Properties LocalData
+version=2011_12_29(build 4 - prior to rollback)
+blFieldTypes=
+ComponentName=Manheim_VIM_URL_Pairing_2
+hasPreferenceData=false
+blDateFormat=M/d{/yy}{ h:mm[:ss]{ a}}!mAM,PM!tAmerica/Chicago
+@end
+@ResultSet ResourceDefinition
+4
+type
+filename
+tables
+loadOrder
+service
+url_paring_services.htm
+Manheim_VIM_URL_Pairing_2Services
+1
+template
+url_paring_templates.hda
+null
+1
+query
+url_paring_query.htm
+Manheim_VIM_URL_Pairing_2QueryTable
+1
+resource
+url_paring_resource.htm
+Manheim_VIM_URL_Pairing_2ColumnTranslationTable
+1
+@end
+@ResultSet MergeRules
+4
+fromTable
+toTable
+column
+loadOrder
+Manheim_VIM_URL_Pairing_2Templates
+IntradocTemplates
+name
+1
+Manheim_VIM_URL_Pairing_2ColumnTranslationTable
+ColumnTranslation
+alias
+1
+@end
+@ResultSet Filters
+4
+type
+location
+parameter
+loadOrder
+@end
+@ResultSet ClassAliases
+2
+classname
+location
+@end
+

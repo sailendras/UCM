@@ -1,0 +1,59 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+URLParing htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<!-- all components can modify this resource to add nodes to the
+     navigation areas -->
+<@dynamichtml custom_finish_layout_init@>
+	<$include super.custom_finish_layout_init$>
+
+	<$include vim_menu$>
+	<$include url_paring_link$>
+<@end@>
+
+
+<!-- add a drop-down menu or a new tray to contain all how to components -->
+
+
+
+<@dynamichtml vim_menu@>
+<$if not vim_menu_included$>
+
+	// add a drop-down menu, or a tray to the UI
+	navBuilder.addChildNodeTo('NAVTREE', 'collection', 'id==VIM', 'label==VIM');
+	if (navBuilder.menuB)
+		navBuilder.menuB.addTopLevelNode("VIM");
+	else if (navBuilder.trayA)
+		navBuilder.trayA.addTopLevelNode("VIM");
+
+	<$vim_menu_included=1$>
+<$endif$>
+<@end@>
+
+
+
+
+
+<!-- the link to the data access page -->
+
+
+<@dynamichtml url_paring_link@>
+navBuilder.addChildNodeTo('VIM', 'item', 'id==URL_PARING',
+		'label==URL Paring', 'url==<$HttpCgiPath$>?IdcService=GET_URL_PARING_PAGE');
+<@end@>
+
+
+
+
+<!-- this column translation is required if you want the component to work with Oracle -->
+
+
+
+
+
+</body></html>
