@@ -24,6 +24,9 @@ VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/resources/
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/resources/MLA_service.htm.old -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/resources/lockwait.dat -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/resources/manheim_lease_app_query.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_PARING/lockwait.dat -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_PARING/manifest.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_PARING/manifest.zip -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_Pairing_2/Manheim_VIM_URL_Pairing_2.zip -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_Pairing_2/classes/urlparing/UpdateVimDatabaseFilter.class -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_VIM_URL_Pairing_2/lockwait.dat -text
