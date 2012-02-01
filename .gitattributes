@@ -17,6 +17,14 @@ VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/manifest.zip -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/new_idoc_script_extensions.htm -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimIdocScriptExtenstions/readme.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/classes/com/manheim/ecm/filters/ImageResizeFilter.class -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/install_strings.htm -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/lockwait.dat -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/manheimimageupdate.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/manifest.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/manifest.zip -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/preference.hda -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/readme.txt -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/Manheim_Lease_App.hda -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/Manheim_Lease_App.zip -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/Manheim_Lease_App/lockwait.dat -text
