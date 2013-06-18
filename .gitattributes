@@ -24,6 +24,7 @@ VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageCopyOutbound/ins
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageCopyOutbound/preference.hda -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageCopyOutbound/readme.txt -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/classes/com/manheim/ecm/filters/ImageResizeFilter.class -text
+VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/classes/com/manheim/ecm/filters/ImageResizeFilter.java -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/install_strings.htm -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/lockwait.dat -text
 VIM/trunk/ManheimVIM/applications/vim/UCMComponents/ManheimImageUpdate/manheimimageupdate.hda -text
